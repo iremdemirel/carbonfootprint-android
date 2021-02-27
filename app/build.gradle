@@ -34,6 +34,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //noinspection GradleCompatible
+    //implementation 'com.android.support:appcompat-v7:24.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+
+    //for varible resolve
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
@@ -47,3 +54,4 @@ dependencies {
 
 
 }
+apply plugin: 'com.google.gms.google-services'
