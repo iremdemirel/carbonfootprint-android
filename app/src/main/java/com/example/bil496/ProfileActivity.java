@@ -2,6 +2,7 @@ package com.example.bil496;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +39,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         textName.setText(user.getDisplayName());
         textEmail.setText(user.getEmail());
+
+        findViewById(R.id.sign_out_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
     }
 
     @Override
@@ -50,5 +58,12 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(this, MainActivity.class));
         }
+    }
+
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
