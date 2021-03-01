@@ -1,5 +1,7 @@
-package com.example.bil496;
+package com.example.bil496.foundations;
 
+import com.example.bil496.foundations.Foundation;
+import com.example.bil496.foundations.FoundationNews;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -9,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class WebScrapingGreenPeace {
@@ -31,7 +32,7 @@ public class WebScrapingGreenPeace {
 
                         Document newsDoc = Jsoup.connect(url).get();
                         String newsTitle = newsDoc.title().substring(0,newsDoc.title().indexOf("-")); //to remove "Greenpeace Akdeniz Turkiye" string.
-                        System.out.println("**** " + newsTitle);
+                        System.out.println("****Scraping: " + newsTitle);
                         Elements news = newsDoc.select("div.container div.post-content div.post-content-lead article.post-details.clearfix").get(0).children();
                         String content = news.text();
                         FoundationNews newsObj = new FoundationNews(newsTitle, content, new Date());

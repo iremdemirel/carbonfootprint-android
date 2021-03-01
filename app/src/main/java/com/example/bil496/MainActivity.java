@@ -2,6 +2,8 @@ package com.example.bil496;
 
 import android.os.Bundle;
 
+import com.example.bil496.foundations.WebScrapingGreenPeace;
+import com.example.bil496.foundations.WebScrapingTema;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;

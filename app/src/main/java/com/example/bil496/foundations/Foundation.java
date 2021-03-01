@@ -1,4 +1,4 @@
-package com.example.bil496;
+package com.example.bil496.foundations;
 
 import java.util.ArrayList;
 
