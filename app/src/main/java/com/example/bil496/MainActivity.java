@@ -27,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         // web scraping for foundations bulletin
-        WebScrapingTema tema_scraper = new WebScrapingTema();
-        tema_scraper.scrape();
+        WebScrapingTema temaScraper= new WebScrapingTema();
+        temaScraper.scrape();
+        WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
+        greenPeaceScraper.scrape();
     }
 
 }

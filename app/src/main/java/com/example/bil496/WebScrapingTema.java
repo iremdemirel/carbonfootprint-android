@@ -46,12 +46,11 @@ public class WebScrapingTema {
                         foundation.addNews(newsObj);
                     }
                     System.out.println("**Scraping is done");
-                    ArrayList<FoundationNews> finalbulletin = foundation.getBulletin();
-
 
                     DatabaseReference dbRef = database.getReference("Foundations/Tema");
                     dbRef.setValue(foundation);
 
+                    ArrayList<FoundationNews> finalbulletin = foundation.getBulletin();
                     for(int i = 0; i<finalbulletin.size(); i++){
                         System.out.println(finalbulletin.get(i).getContent());
                     }

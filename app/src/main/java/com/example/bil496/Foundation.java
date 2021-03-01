@@ -16,8 +16,8 @@ public class Foundation {
     }
 
     public Foundation(String name, String url){
-        name = "";
-        url = "";
+        name = name;
+        url = url;
         bulletin = new ArrayList<>();
         totalDonation = 0;
     }
