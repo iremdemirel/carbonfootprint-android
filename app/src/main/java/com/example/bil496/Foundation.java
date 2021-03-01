@@ -30,4 +30,7 @@ public class Foundation {
         return bulletin;
     }
 
+    public double getTotalDonation() {
+        return totalDonation;
+    }
 }

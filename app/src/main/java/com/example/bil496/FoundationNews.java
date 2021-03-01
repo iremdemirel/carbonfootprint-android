@@ -18,6 +18,10 @@ public class FoundationNews {
         return title;
     }
 
+    public String getContent(){
+        return content;
+    }
+
     //default constructor
     public FoundationNews(){
 
