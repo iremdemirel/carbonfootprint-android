@@ -12,6 +12,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bil496.foundations.WebScrapingGreenPeace;
+import com.example.bil496.foundations.WebScrapingTema;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+        // web scraping for foundations bulletin
+        WebScrapingTema temaScraper= new WebScrapingTema();
+        temaScraper.scrape();
+        WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
+        greenPeaceScraper.scrape();
 
     }
 
