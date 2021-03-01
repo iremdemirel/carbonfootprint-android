@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
 android {
     compileSdkVersion 29
@@ -31,6 +32,14 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation files('src\\main\\java\\com\\example\\bil496\\lib\\jsoup-1.13.1.jar')  //for web scraping
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:26.5.0')
+
+    // Declare the dependency for the Realtime Database library
+    implementation 'com.google.firebase:firebase-database'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

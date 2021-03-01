@@ -2,6 +2,8 @@ package com.example.bil496;
 
 import android.os.Bundle;
 
+import com.example.bil496.foundations.WebScrapingGreenPeace;
+import com.example.bil496.foundations.WebScrapingTema;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        // web scraping for foundations bulletin
+        WebScrapingTema temaScraper= new WebScrapingTema();
+        temaScraper.scrape();
+        WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
+        greenPeaceScraper.scrape();
     }
 
 }

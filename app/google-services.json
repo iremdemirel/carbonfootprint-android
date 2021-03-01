@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "960144856399",
+    "firebase_url": "https://carbonfootprint-826f5-default-rtdb.firebaseio.com",
+    "project_id": "carbonfootprint-826f5",
+    "storage_bucket": "carbonfootprint-826f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960144856399:android:80b21e7d5d0d0fb0b1613a",
+        "android_client_info": {
+          "package_name": "com.carbonfootprint.unity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960144856399-mh7rma3j3o1i9ttpfm7m3r7eo9ajmvl1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carbonfootprint.unity",
+            "certificate_hash": "d3daa869db9122f52bfe4e5c4d98637ffc683cd2"
+          }
+        },
+        {
+          "client_id": "960144856399-vk8hhfq3oh1ujq1nf8ebeq2s1lkcqh4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBTRLpASUyE48kFvV90KrTn6KzfnaMggE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960144856399-vk8hhfq3oh1ujq1nf8ebeq2s1lkcqh4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960144856399:android:9dcd587915205033b1613a",
+        "android_client_info": {
+          "package_name": "com.example.bil496"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960144856399-bigc5s7kga5v9bg57it0db6ki2gijo8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bil496",
+            "certificate_hash": "d3daa869db9122f52bfe4e5c4d98637ffc683cd2"
+          }
+        },
+        {
+          "client_id": "960144856399-vk8hhfq3oh1ujq1nf8ebeq2s1lkcqh4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBTRLpASUyE48kFvV90KrTn6KzfnaMggE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960144856399-vk8hhfq3oh1ujq1nf8ebeq2s1lkcqh4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960144856399:android:d2f28369a75065efb1613a",
+        "android_client_info": {
+          "package_name": "com.example.carbonfootprint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960144856399-69vlgd5aohpiu7tdhbujmg8i5idvor7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carbonfootprint",
+            "certificate_hash": "8855694c8aa561bc38547c3effdf80f551b019b7"
+          }
+        },
+        {
+          "client_id": "960144856399-vk8hhfq3oh1ujq1nf8ebeq2s1lkcqh4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBTRLpASUyE48kFvV90KrTn6KzfnaMggE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960144856399-vk8hhfq3oh1ujq1nf8ebeq2s1lkcqh4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
