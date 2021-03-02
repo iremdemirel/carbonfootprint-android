@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="araba">Araba</string>
+    <string name="otobus">Otobüs</string>
+    <string name="bisiklet">Bisiklet</string>
+    <string name="elektrik">Elektrik</string>
+    <string name="dogalgaz">Doğalgaz</string>
 </resources>
