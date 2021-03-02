@@ -31,6 +31,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             />
 
         <TextView
+            android:id="@+id/active_journey_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"
@@ -55,6 +56,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             android:weightSum="1"
             android:baselineAligned="false">
             <LinearLayout
+                android:id="@+id/active_journey_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_weight="1"
@@ -111,6 +113,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             android:weightSum="3"
             android:baselineAligned="false">
             <LinearLayout
+                android:id="@+id/car_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_weight="1"
@@ -141,6 +144,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/bus_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_weight="1"
@@ -169,6 +173,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/bicycle_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_weight="1"
@@ -226,6 +231,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             android:weightSum="2"
             android:baselineAligned="false">
             <LinearLayout
+                android:id="@+id/electricity_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_weight="1"
@@ -254,6 +260,7 @@ android:orientation="vertical" tools:context=".ui.dashboard.DashboardFragment">
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/gas_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_weight="1"

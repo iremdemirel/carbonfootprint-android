@@ -11,12 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.carbonfootprintcalculation.add_electricity_menu"></activity>
+        <activity android:name=".ui.carbonfootprintcalculation.add_gas_menu" />
+        <activity android:name=".ui.carbonfootprintcalculation.add_bus_menu" />
+        <activity android:name=".ui.carbonfootprintcalculation.add_bike_menu" />
+        <activity android:name=".ui.carbonfootprintcalculation.add_active_journey_menu" />
+        <activity android:name=".ui.carbonfootprintcalculation.add_car_menu" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
