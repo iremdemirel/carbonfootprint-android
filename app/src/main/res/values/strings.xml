@@ -4,4 +4,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_foundations">Foundations</string>
+    <string name="araba">Araba</string>
+    <string name="otobus">Otobüs</string>
+    <string name="bisiklet">Bisiklet</string>
+    <string name="elektrik">Elektrik</string>
+    <string name="dogalgaz">Doğalgaz</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
