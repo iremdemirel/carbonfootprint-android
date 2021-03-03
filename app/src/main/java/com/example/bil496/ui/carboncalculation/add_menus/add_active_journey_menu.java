@@ -1,7 +1,6 @@
-package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+package com.example.bil496.ui.carboncalculation.add_menus;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.widget.TextView;

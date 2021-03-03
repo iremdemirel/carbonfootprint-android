@@ -1,0 +1,18 @@
+Index: app/src/main/java/com/example/bil496/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.navigation.NavController;\r\nimport androidx.navigation.Navigation;\r\nimport androidx.navigation.ui.AppBarConfiguration;\r\nimport androidx.navigation.ui.NavigationUI;\r\n\r\nimport com.example.bil496.foundations.WebScrapingGreenPeace;\r\nimport com.example.bil496.foundations.WebScrapingTema;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n\r\n        super.onCreate(savedInstanceState);\r\n\r\n        setContentView(R.layout.activity_main);\r\n        BottomNavigationView navView = findViewById(R.id.nav_view);\r\n        // Passing each menu ID as a set of Ids because each\r\n        // menu should be considered as top level destinations.\r\n        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(\r\n                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)\r\n                .build();\r\n        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);\r\n        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);\r\n        NavigationUI.setupWithNavController(navView, navController);\r\n\r\n\r\n        // web scraping for foundations bulletin\r\n        WebScrapingTema temaScraper= new WebScrapingTema();\r\n        temaScraper.scrape();\r\n        WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();\r\n        greenPeaceScraper.scrape();\r\n\r\n    }\r\n\r\n    public void logout(final View view) {\r\n        FirebaseAuth.getInstance().signOut();\r\n\r\n        GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())\r\n                .signOut().addOnSuccessListener(new OnSuccessListener<Void>() {\r\n            @Override\r\n            public void onSuccess(Void aVoid) {\r\n                startActivity(new Intent(view.getContext(), LoginActivity.class));\r\n            }\r\n        }).addOnFailureListener(new OnFailureListener() {\r\n            @Override\r\n            public void onFailure(@NonNull Exception e) {\r\n                Toast.makeText(MainActivity.this, \"Logout failed\", Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/bil496/MainActivity.java	(revision c702fd045eb8328a0733849e7f3b389623d848f3)
++++ app/src/main/java/com/example/bil496/MainActivity.java	(date 1614725090583)
+@@ -61,6 +61,7 @@
+             @Override
+             public void onFailure(@NonNull Exception e) {
+                 Toast.makeText(MainActivity.this, "Logout failed", Toast.LENGTH_SHORT).show();
++
+             }
+         });
+     }
+diff --git .idea/shelf/unnamed.xml .idea/shelf/unnamed.xml

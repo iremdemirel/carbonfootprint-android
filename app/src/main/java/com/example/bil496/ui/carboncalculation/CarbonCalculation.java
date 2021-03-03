@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.bil496.R;
-import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_active_journey_menu;
-import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_bike_menu;
-import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_bus_menu;
-import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_car_menu;
-import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_electricity_menu;
-import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_gas_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_active_journey_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_bike_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_bus_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_car_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_electricity_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_gas_menu;
 
 public class CarbonCalculation extends Fragment {
 
@@ -34,6 +34,7 @@ public class CarbonCalculation extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_carbon_calculation, container, false);
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
