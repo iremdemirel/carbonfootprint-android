@@ -3,6 +3,7 @@ package com.example.bil496;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bil496.foundations.Foundation;
+import com.example.bil496.foundations.FoundationNews;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,8 +23,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         // web scraping for foundations bulletin
-        WebScrapingTema temaScraper= new WebScrapingTema();
+        /*WebScrapingTema temaScraper= new WebScrapingTema();
         temaScraper.scrape();
         WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
         greenPeaceScraper.scrape();
+        */
 
     }
+
 
     public void logout(final View view) {
         FirebaseAuth.getInstance().signOut();
