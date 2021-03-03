@@ -1,4 +1,4 @@
-package com.example.bil496.ui.carbonfootprintcalculation;
+package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
 
 import androidx.appcompat.app.AppCompatActivity;
 

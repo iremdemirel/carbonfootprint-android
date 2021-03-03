@@ -1,4 +1,4 @@
-package com.example.bil496.ui.carbonfootprintcalculation;
+package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,9 +15,8 @@ public class add_active_journey_menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_active_journey_menu);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.add_utility_toolbar);
-        setSupportActionBar(toolbar);
-        TextView title = (TextView) findViewById(R.id.add_utility_toolbar_title);
+
+        TextView title = (TextView) findViewById(R.id.active_journey_text);
         title.setText("hi");
 
 
