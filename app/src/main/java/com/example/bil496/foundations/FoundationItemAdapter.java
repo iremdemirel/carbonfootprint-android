@@ -1,24 +1,22 @@
-package com.example.bil496;
+package com.example.bil496.foundations;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bil496.foundations.Foundation;
-import com.example.bil496.foundations.FoundationData;
+import com.example.bil496.R;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyAdapter extends RecyclerView.Adapter {
+public class FoundationItemAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.foundation_row, parent, false);
+        View view = inflater.inflate(R.layout.foundation_item, parent, false);
 
         return new MyViewHolder(view);
     }
