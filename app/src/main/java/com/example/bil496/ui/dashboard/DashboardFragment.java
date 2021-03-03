@@ -26,13 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.example.bil496.R.*;
 import static com.example.bil496.R.layout.*;
 
 public class DashboardFragment extends Fragment {
-    final ArrayList<String> newsTitle = new ArrayList<>();
-    final ArrayList<String> newsContent = new ArrayList<>();
+    ///final ArrayList<String> newsTitle = new ArrayList<>();
+    //final ArrayList<String> newsContent = new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
     DatabaseReference ref;
     Context cont;
@@ -47,37 +48,54 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        newsTitle.add("atakan");
-        newsContent.add("deneme");
 
         cont = getContext();
         //dashboardViewModel = (ListView)getView().findViewById(R.id.listView);
         root = inflater.inflate(fragment_dashboard, container, false);
-
         listView = root.findViewById(id.lv_foundationNews);
+        listAdapter = new FoundationNewsListAdapter(inflater);
+
+        readData(new Callback(){
+            @Override
+            public void onCallback(String title, String content) {
+
+            }
+        });
+/*
+        String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
+        String[] contentarr = Arrays.copyOf(newsContent.toArray(), newsContent.size(), String[].class);
+        listAdapter.setTitles(titlearr);
+        listAdapter.setContents(contentarr);
+        listView.setAdapter(listAdapter);
+*/
+        return root;
+
+    }
+
+    public void readData(final Callback callback){
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference("Foundations").child("Green Peace")
                 .child("bulletin");
 
-        listAdapter = new FoundationNewsListAdapter(inflater);
         dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
-                newsTitle.clear(); // ArrayList<Pojo/Object> \\
-                newsContent.clear();
+                ArrayList<String> newsTitle = new ArrayList<>();
+                ArrayList<String> newsContent = new ArrayList<>();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     String content = postSnapshot.child("content").getValue(String.class);
                     String title = postSnapshot.child("title").getValue(String.class);
-                    System.out.println("title:" + title);
-                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
-
-                    // Putting Data into Getter Setter \\
                     newsTitle.add(title);
                     newsContent.add(content);
 
                 }
+                String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
+                String[] contentarr = Arrays.copyOf(newsContent.toArray(), newsContent.size(), String[].class);
+                listAdapter.setTitles(titlearr);
+                listAdapter.setContents(contentarr);
+                listView.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
             }
 
@@ -86,23 +104,6 @@ public class DashboardFragment extends Fragment {
 
             }
         });
-        String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
-        String[] contentarr = Arrays.copyOf(newsContent.toArray(), newsContent.size(), String[].class);
-        listAdapter.setTitles(titlearr);
-        listAdapter.setContents(contentarr);
-        listView.setAdapter(listAdapter);
-
-
-        /*dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);*/
-
-        /*dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-        return root;
-
     }
+
 }
