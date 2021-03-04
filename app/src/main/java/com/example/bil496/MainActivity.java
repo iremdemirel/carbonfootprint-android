@@ -1,8 +1,13 @@
 package com.example.bil496;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +27,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+    TextView bio;
+    EditText editbio;
+    AlertDialog dialog;
+    Button editBioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,4 +74,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void editBio(final View view) {
+
+        bio = (TextView) findViewById(R.id.bio);
+        dialog = new AlertDialog.Builder(this).create();
+        editbio = new EditText(this);
+
+        dialog.setTitle("Bio düzenle");
+        dialog.setView(editbio);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Kaydet", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                bio.setText(editbio.getText());
+            }
+        });
+
+        editbio.setText(bio.getText());
+        dialog.show();
+    }
 }
