@@ -7,8 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bil496.R;
+import com.example.bil496.ui.foundations.FoundationPageFragment;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FoundationItemAdapter extends RecyclerView.Adapter {
@@ -50,6 +54,9 @@ public class FoundationItemAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
+            AppCompatActivity activity = (AppCompatActivity)v.getContext();
+            FoundationPageFragment foundationPage = new FoundationPageFragment();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.rec,foundationPage).addToBackStack(null).commit();
 
         }
     }
