@@ -12,9 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.bil496.MainActivity;
 import com.example.bil496.R;
 import com.example.bil496.foundations.Foundation;
 import com.example.bil496.foundations.FoundationNews;
@@ -41,6 +44,9 @@ public class DashboardFragment extends Fragment {
     private View root;
     private FoundationNewsListAdapter listAdapter;
 
+    public DashboardFragment() {
+    }
+
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
@@ -53,7 +59,7 @@ public class DashboardFragment extends Fragment {
         //dashboardViewModel = (ListView)getView().findViewById(R.id.listView);
         root = inflater.inflate(fragment_dashboard, container, false);
         listView = root.findViewById(id.lv_foundationNews);
-        listAdapter = new FoundationNewsListAdapter(inflater);
+        listAdapter = new FoundationNewsListAdapter(inflater, getActivity());
 
         readData(new Callback(){
             @Override
