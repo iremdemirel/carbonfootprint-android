@@ -1,19 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.foundations.FoundationPageFragment"
+    android:id="@+id/foundationpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkgreen"
-    android:id="@+id/foundationpage">
+    tools:context=".ui.foundations.FoundationPageFragment">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/rellay1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="50dp"
-        tools:src="@tools:sample/avatars" />
+        android:background="@drawable/grad"
+        android:paddingBottom="20dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <RelativeLayout
+            android:id="@+id/rellay2"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            android:layout_below="@id/rellay1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/foundation_image"
+                android:layout_width="127dp"
+                android:layout_height="125dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="13dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="270dp"
+                android:layout_marginRight="270dp"
+                android:layout_marginBottom="38dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/circle"
+                android:padding="3dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/tema_logo" />
+
+            <TextView
+                android:id="@+id/foundation_name"
+                android:layout_width="wrap_content"
+                android:layout_height="58dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="29dp"
+                android:layout_marginLeft="29dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="99dp"
+                android:layout_marginRight="99dp"
+                android:layout_marginBottom="94dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Tema Vakfı"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <RelativeLayout
+                android:id="@+id/imgfoundation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="123dp"
+                android:background="@drawable/circle_border">
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="32dp"
+                android:layout_height="36dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="41dp"
+                android:layout_marginRight="41dp"
+                android:layout_marginBottom="95dp"
+                android:background="@drawable/ic_charity" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="158dp"
+                android:layout_marginRight="158dp"
+                android:layout_marginBottom="59dp"
+                android:background="@drawable/rounded_corner"
+                android:text="Bağış Miktarı: "
+                android:textColor="@color/darkgreen" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="145dp"
+                android:layout_marginRight="145dp"
+                android:layout_marginBottom="61dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
