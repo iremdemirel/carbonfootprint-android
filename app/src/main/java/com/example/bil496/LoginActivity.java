@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +15,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
@@ -26,11 +30,13 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient signInClient;
     FirebaseAuth firebaseAuth;
+    AuthCredential authCredential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         signIn = findViewById(R.id.signIn);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -69,11 +75,25 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);
                 if (signInAcc != null) {
-                    AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
+                    authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
                 }
 
-                Toast.makeText(getApplicationContext(), "Login succesful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(getApplicationContext(), "Login başarılı", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Login başarısız", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
             } catch (ApiException e) {
                 e.printStackTrace();
