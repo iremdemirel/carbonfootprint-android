@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     users.setName(user.getDisplayName());
                     users.setEmail(user.getEmail());
                     users.setPhotoURL(user.getPhotoUrl().toString());
+                    users.setBio("");
 
                     ref.setValue(users);
                 }
@@ -130,6 +131,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 bio.setText(editbio.getText());
+
+                final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                reference.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if ((dataSnapshot.child("email").exists())) {
+
+                            reference.child("Users").child(currentUserID).child("bio").setValue(editbio.getText().toString()).addOnSuccessListener(new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    Toast.makeText(MainActivity.this, "Veritabanına bio kaydedildi", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        } else {
+                            Toast.makeText(MainActivity.this, "Veritabanında kullanıcı kayıtlı degil", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MainActivity.this, "Veritabanına bio kaydedilmedi", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
 
