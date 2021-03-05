@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent sign = signInClient.getSignInIntent();
+                //startActivity(new Intent(v.getContext(), MainActivity.class));
                 startActivityForResult(sign, GOOGLE_SIGN_IN_CODE);
             }
         });
