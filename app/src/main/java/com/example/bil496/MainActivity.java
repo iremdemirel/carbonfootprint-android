@@ -1,27 +1,47 @@
 package com.example.bil496;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bil496.foundations.Foundation;
+import com.example.bil496.foundations.FoundationNewAdapter;
+import com.example.bil496.foundations.FoundationNews;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
+import com.example.bil496.ui.dashboard.NewsFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.zip.Inflater;
+
+import static com.example.bil496.R.layout.fragment_dashboard;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         // web scraping for foundations bulletin
-        WebScrapingTema temaScraper= new WebScrapingTema();
+        /*WebScrapingTema temaScraper= new WebScrapingTema();
         temaScraper.scrape();
         WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
         greenPeaceScraper.scrape();
+        */
 
     }
+
 
     public void logout(final View view) {
         FirebaseAuth.getInstance().signOut();
@@ -63,6 +85,33 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Logout failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void changeFrame(String title, String content, LayoutInflater inflater){
+        /*FoundationNewAdapter foundationNewAdapter = new FoundationNewAdapter(title, content, MainActivity.this);
+        View root = inflater.inflate(fragment_dashboard, container, false);
+        listlistView = root.findViewById(R.id.lv_foundationNews);*/
+        NewsFragment newsFragment = new NewsFragment(title, content);
+        MainActivity.this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_dashboard_container, newsFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+        /*
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.navigation_dashboard, newsFragment, null);
+        transaction.commit();
+        */
+        /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.lv_foundationNews, newsFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+        View v = inflater.inflate(R.layout.list_item, null);
+        holder.title = (TextView) v.findViewById(R.id.title_foundationNew);
+        holder.content = (TextView) v.findViewById(R.id.content_foundationNew);
+        holder.title.setText(titles[position]);
+        holder.content.setText(contents[position]);*/
     }
 
 }
