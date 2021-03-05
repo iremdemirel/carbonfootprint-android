@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bil496.forFirebase.Users;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,13 +26,19 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     TextView bio;
     EditText editbio;
     AlertDialog dialog;
     Button editBioButton;
-
+    DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,12 +55,48 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        reference = FirebaseDatabase.getInstance().getReference();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            insertUsertoDatabase();
+        }
+
 
         // web scraping for foundations bulletin
-        WebScrapingTema temaScraper= new WebScrapingTema();
+        WebScrapingTema temaScraper = new WebScrapingTema();
         temaScraper.scrape();
         WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
         greenPeaceScraper.scrape();
+
+    }
+
+    private void insertUsertoDatabase() {
+        final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        reference.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if ((dataSnapshot.child("email").exists())) {
+                    Toast.makeText(MainActivity.this, "Veritabanına kayıt", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = reference.child("Users").child(currentUserID);
+
+                    Users users = new Users();
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    users.setName(user.getDisplayName());
+                    users.setEmail(user.getEmail());
+                    users.setPhotoURL(user.getPhotoUrl().toString());
+
+                    ref.setValue(users);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, "Veritabanına kaydedilmedi", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
