@@ -1,9 +1,5 @@
 package com.example.bil496.ui.carboncalculation.add_menus;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,29 +10,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.bil496.R;
-import com.example.bil496.ui.carboncalculation.CarbonCalculation;
 
-import static java.lang.Integer.parseInt;
-
-
-public class add_car_menu extends DialogFragment {
-    private Spinner car_type_spinner;
-    private EditText car_journey_distance;
+public class add_flight_menu extends DialogFragment {
+    private Spinner flight_type_spinner;
+    private EditText flight_journey_distance;
     TextView mActionOk, mActionCancel;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_menu,null);
+        View v = inflater.inflate(R.layout.fragment_add_flight_menu,null);
 
         mActionOk = v.findViewById(R.id.action_ok);
         mActionCancel = v.findViewById(R.id.action_cancel);
-        car_journey_distance = v.findViewById(R.id.edit_car_distance);
+        flight_journey_distance = v.findViewById(R.id.edit_flight_distance);
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,11 +38,11 @@ public class add_car_menu extends DialogFragment {
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = car_journey_distance.getText().toString();
+                String input = flight_journey_distance.getText().toString();
                 getDialog().dismiss();
             }
         });
         return v;
     }
 
-   }
+}

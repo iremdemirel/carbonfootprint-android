@@ -10,18 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.bil496.R;
 import com.example.bil496.ui.carboncalculation.add_menus.add_active_journey_menu;
-import com.example.bil496.ui.carboncalculation.add_menus.add_bike_menu;
-import com.example.bil496.ui.carboncalculation.add_menus.add_bus_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_car_menu;
-import com.example.bil496.ui.carboncalculation.add_menus.add_electricity_menu;
-import com.example.bil496.ui.carboncalculation.add_menus.add_gas_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_flight_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_publictransport_menu;
 
-public class CarbonCalculation extends Fragment {
+import javax.xml.datatype.Duration;
 
+public class CarbonCalculation extends Fragment{
+
+    public String a ;
     private LinearLayout activejourney;
+    private LinearLayout flight;
     private LinearLayout car;
     private LinearLayout bike;
     private LinearLayout bus;
@@ -42,6 +45,7 @@ public class CarbonCalculation extends Fragment {
 
         v = getView();
         activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);
+        flight =(LinearLayout) v.findViewById(R.id.fly_button);
         car = (LinearLayout) v.findViewById(R.id.car_button);
         bike = (LinearLayout) v.findViewById(R.id.bicycle_button);
         bus = (LinearLayout) v.findViewById(R.id.bus_button);
@@ -56,28 +60,37 @@ public class CarbonCalculation extends Fragment {
             }
         });
 
-        car.setOnClickListener(new View.OnClickListener() {
+        flight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), add_car_menu.class));
+                add_flight_menu dialog = new add_flight_menu();
+                dialog.show(getFragmentManager(), "add_flight_menu");
             }
         });
 
+        car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               add_car_menu dialog = new add_car_menu();
+               dialog.show(getFragmentManager(), "add_car_menu");
+            }
+        });
         bike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), add_bike_menu.class));
+                /**/
             }
         });
 
         bus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), add_bus_menu.class));
+                add_publictransport_menu dialog = new add_publictransport_menu();
+                dialog.show(getFragmentManager(), "add_publictransport_menu");
             }
         });
 
-        electricity.setOnClickListener(new View.OnClickListener() {
+       /* electricity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), add_electricity_menu.class));
@@ -91,7 +104,9 @@ public class CarbonCalculation extends Fragment {
             }
         });
 
-
+*/
 
     }
+
+
 }

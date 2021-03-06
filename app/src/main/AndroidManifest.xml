@@ -11,17 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.carboncalculation.add_menus.add_gas_activity"></activity>
-        <activity android:name=".ui.carboncalculation.add_menus.add_electricity_activity" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_bus_activity" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_bike_activity" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_car_activity" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_electricity_menu" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_gas_menu" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_bus_menu" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_bike_menu" />
         <activity android:name=".ui.carboncalculation.add_menus.add_active_journey_menu" />
-        <activity android:name=".ui.carboncalculation.add_menus.add_car_menu" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
