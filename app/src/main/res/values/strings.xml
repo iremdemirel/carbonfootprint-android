@@ -35,5 +35,14 @@
         <item>LargePetrolCar</item>
     </string-array>
 
+    <string-array name="flight_types">
+        <item>LongFirstClassFlight</item>
+        <item>LongBusinessClassFlight</item>
+        <item>LongPremiumClassFlight</item>
+        <item>LongEconomyClassFlight</item>
+        <item>ShortBusinessClassFlight</item>
+        <item>ShortEconomyClassFlight</item>
+        <item>DomesticFlight</item>
+    </string-array>
 
 </resources>
