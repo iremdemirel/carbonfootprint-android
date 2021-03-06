@@ -45,4 +45,16 @@
         <item>DomesticFlight</item>
     </string-array>
 
+    <string-array name="publictransport_types">
+        <item>Taxi</item>
+        <item>ClassicBus</item>
+        <item>EcoBus</item>
+        <item>Coach</item>
+        <item>NationalTrain</item>
+        <item>LightRail</item>
+        <item>Subway</item>
+        <item>FerryOnFoot</item>
+        <item>FerryInCar</item>
+    </string-array>
+
 </resources>
