@@ -22,9 +22,28 @@ public class FoundationNews {
         return content;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setScrapeDate(Date scrapeDate) {
+        this.scrapeDate = scrapeDate;
+    }
+
     //default constructor
     public FoundationNews(){
 
     }
 
+    @Override
+    public String toString() {
+        return "FoundationNews{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

@@ -40,6 +40,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation files('src\\main\\java\\com\\example\\bil496\\lib\\jsoup-1.13.1.jar')  //for web scraping
 
     // Import the Firebase BoM
@@ -47,6 +48,8 @@ dependencies {
 
     // Declare the dependency for the Realtime Database library
     implementation 'com.google.firebase:firebase-database'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.12'

@@ -33,4 +33,12 @@ public class Foundation {
     public double getTotalDonation() {
         return totalDonation;
     }
+
+    @Override
+    public String toString() {
+        return "Foundation{" +
+                "bulletin=" + bulletin +
+                ", totalDonation=" + totalDonation +
+                '}';
+    }
 }
