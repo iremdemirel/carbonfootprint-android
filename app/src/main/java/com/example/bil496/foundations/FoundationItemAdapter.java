@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bil496.MainActivity;
 import com.example.bil496.R;
 import com.example.bil496.ui.foundations.FoundationPageFragment;
 
@@ -55,8 +56,11 @@ public class FoundationItemAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View v) {
             AppCompatActivity activity = (AppCompatActivity)v.getContext();
-            FoundationPageFragment foundationPage = new FoundationPageFragment();
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.rec,foundationPage).addToBackStack(null).commit();
+            FoundationPageFragment foundationPage = new FoundationPageFragment((String)foundation_desc.getText(),foundation_logo);
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_foundation,foundationPage)
+                    .addToBackStack(null).commit();
 
         }
     }
