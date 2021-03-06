@@ -21,10 +21,15 @@ import com.example.bil496.LoginActivity;
 import com.example.bil496.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeFragment extends Fragment {
 
@@ -35,30 +40,50 @@ public class HomeFragment extends Fragment {
     EditText editbio;
     AlertDialog dialog;
     Button editBioButton;
+    DatabaseReference reference;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
-
         imageView = (ImageView) root.findViewById(R.id.photo);
         name = (TextView) root.findViewById(R.id.name);
         email = (TextView) root.findViewById(R.id.email);
         bio = (TextView) root.findViewById(R.id.bio);
 
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        Glide.with(this.getActivity())
-                .load(user.getPhotoUrl())
-                .into(imageView);
-
-        name.setText(user.getDisplayName());
-        email.setText(user.getEmail());
-        bio.setText("BIO");
+        initProfileInfo();
 
         return root;
+    }
+
+    private void initProfileInfo() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        reference = FirebaseDatabase.getInstance().getReference();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
+            Glide.with(this.getActivity())
+                    .load(user.getPhotoUrl())
+                    .into(imageView);
+
+            name.setText(user.getDisplayName());
+            email.setText(user.getEmail());
+            Toast.makeText(getContext(), mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+            reference.child("Users").child(mAuth.getCurrentUser().getUid()).child("bio").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(getContext(), "bio veritabanından getirilemedi", Toast.LENGTH_SHORT).show();
+                    } else {
+                        bio.setText(String.valueOf(task.getResult().getValue()));
+                    }
+                }
+            });
+        }
     }
 
     public void logout(final android.view.View view) {
