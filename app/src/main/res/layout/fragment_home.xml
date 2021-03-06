@@ -80,25 +80,24 @@
         android:text="@string/LOGOUT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.786"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintTop_toBottomOf="@+id/editBio"
+        app:layout_constraintVertical_bias="0.109" />
 
     <Button
         android:id="@+id/editBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="348dp"
+        android:layout_width="113dp"
+        android:layout_height="35dp"
         android:clickable="true"
         android:focusable="true"
         android:onClick="editBio"
         android:text="@string/bio_d_zenle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintVertical_bias="0.452" />
+        app:layout_constraintVertical_bias="0.044" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
