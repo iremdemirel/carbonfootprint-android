@@ -17,6 +17,7 @@ import com.example.bil496.R;
 import com.example.bil496.ui.carboncalculation.add_menus.add_active_journey_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_car_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_flight_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_motorbike_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_publictransport_menu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -120,7 +121,8 @@ public class CarbonCalculation extends Fragment{
         bike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**/
+                add_motorbike_menu dialog = new add_motorbike_menu();
+                dialog.show(getFragmentManager(), "add_motorbike?menu");
             }
         });
 

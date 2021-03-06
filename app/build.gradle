@@ -4,6 +4,7 @@ apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.example.bil496"
@@ -69,6 +70,7 @@ dependencies {
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
-
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 }
 apply plugin: 'com.google.gms.google-services'
