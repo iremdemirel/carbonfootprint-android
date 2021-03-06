@@ -42,6 +42,7 @@ dependencies {
 
     // Declare the dependency for the Realtime Database library
     implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-storage'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.12'
@@ -54,7 +55,6 @@ dependencies {
 
     //for varible resolve
     implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
-
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
 
