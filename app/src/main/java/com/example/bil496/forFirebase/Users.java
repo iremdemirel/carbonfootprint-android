@@ -1,11 +1,14 @@
 package com.example.bil496.forFirebase;
 
+import java.util.ArrayList;
+
 public class Users {
     private String name;
     private String email;
     private String photoURL;
     private String bio;
     //private int score;
+    private ArrayList<Blog> blog;
 
     public Users() {
     }
@@ -58,13 +61,11 @@ public class Users {
         this.name = name;
     }
 
-    /*private Blog blog;
-
-    public Blog getBlog() {
+    public ArrayList<Blog> getBlog() {
         return blog;
     }
 
-    public void setBlog(Blog blog) {
+    public void setBlog(ArrayList<Blog> blog) {
         this.blog = blog;
-    }*/
+    }
 }
