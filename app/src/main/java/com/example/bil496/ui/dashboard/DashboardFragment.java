@@ -56,7 +56,6 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         cont = getContext();
-        //dashboardViewModel = (ListView)getView().findViewById(R.id.listView);
         root = inflater.inflate(fragment_dashboard, container, false);
         listView = root.findViewById(id.lv_foundationNews);
         listAdapter = new FoundationNewsListAdapter(inflater, getActivity());
@@ -67,22 +66,15 @@ public class DashboardFragment extends Fragment {
 
             }
         });
-/*
-        String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
-        String[] contentarr = Arrays.copyOf(newsContent.toArray(), newsContent.size(), String[].class);
-        listAdapter.setTitles(titlearr);
-        listAdapter.setContents(contentarr);
-        listView.setAdapter(listAdapter);
-*/
         return root;
 
     }
 
     public void readData(final Callback callback){
         firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference("Foundations").child("Green Peace")
-                .child("bulletin");
-
+        //DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference("Foundations").child("Green Peace")
+        //        .child("bulletin");
+        DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference("Foundations");
         dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
@@ -91,10 +83,13 @@ public class DashboardFragment extends Fragment {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    String content = postSnapshot.child("content").getValue(String.class);
-                    String title = postSnapshot.child("title").getValue(String.class);
-                    newsTitle.add(title);
-                    newsContent.add(content);
+                    for(DataSnapshot postSnapshot2: postSnapshot.child("bulletin").getChildren()){
+
+                        String content = postSnapshot2.child("content").getValue(String.class);
+                        String title = postSnapshot2.child("title").getValue(String.class);
+                        newsTitle.add(title);
+                        newsContent.add(content);
+                    }
 
                 }
                 String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
