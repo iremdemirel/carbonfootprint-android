@@ -9,19 +9,20 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.bil496.R;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class add_publictransport_menu extends DialogFragment implements AdapterView.OnItemSelectedListener {
-    private Spinner publictransport_type_spinner;
     private EditText publictransport_journey_distance;
     TextView mActionOk, mActionCancel;
-
+    String spinner_publictransport_text;
 
     @Nullable
     @Override
@@ -30,7 +31,7 @@ public class add_publictransport_menu extends DialogFragment implements AdapterV
 
         mActionOk = v.findViewById(R.id.action_ok);
         mActionCancel = v.findViewById(R.id.action_cancel);
-        publictransport_type_spinner = v.findViewById(R.id.publictransport_type_spinner);
+        Spinner publictransport_type_spinner = v.findViewById(R.id.publictransport_type_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.publictransport_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         publictransport_type_spinner.setAdapter(adapter);
@@ -46,8 +47,33 @@ public class add_publictransport_menu extends DialogFragment implements AdapterV
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = publictransport_journey_distance.getText().toString();
+                final String input = publictransport_journey_distance.getText().toString();
                 getDialog().dismiss();
+                final Thread thread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            OkHttpClient client = new OkHttpClient();
+                            Request request = new Request.Builder()
+                                    .url("https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromPublicTransit?distance="+ input + "&type=" + spinner_publictransport_text)
+                                    .get()
+                                    .addHeader("x-rapidapi-key", "aaed0b37a1msh4673114dfa083a6p14111ejsnf86b67abc762")
+                                    .addHeader("x-rapidapi-host", "carbonfootprint1.p.rapidapi.com")
+                                    .build();
+
+
+                            Response response = client.newCall(request).execute();
+                            System.out.println(response.body().string());
+
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage() + "EEEEEEEEEEEEEEEEEEEEEEEE");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                thread.start();
             }
         });
         return v;
@@ -55,8 +81,7 @@ public class add_publictransport_menu extends DialogFragment implements AdapterV
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+        spinner_publictransport_text = parent.getItemAtPosition(position).toString();
     }
 
     @Override

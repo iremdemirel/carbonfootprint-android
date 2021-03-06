@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -25,7 +23,6 @@ public class add_flight_menu extends DialogFragment implements AdapterView.OnIte
     private EditText flight_journey_distance;
     TextView mActionOk, mActionCancel;
     String spinner_flight_text;
-
 
     @Nullable
     @Override
@@ -59,7 +56,6 @@ public class add_flight_menu extends DialogFragment implements AdapterView.OnIte
                     public void run() {
                         try {
                             OkHttpClient client = new OkHttpClient();
-
                             Request request = new Request.Builder()
                                     .url("https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromFlight?distance="+ input + "&type=" + spinner_flight_text)
                                     .get()
