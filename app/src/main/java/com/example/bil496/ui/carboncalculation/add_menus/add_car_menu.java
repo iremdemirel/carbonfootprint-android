@@ -52,6 +52,7 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
             @Override
             public void onClick(final View v) {
                 final String input = car_journey_distance.getText().toString();
+                getDialog().dismiss();
                 final Thread thread = new Thread(new Runnable() {
 
                     @Override
@@ -61,7 +62,7 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
                             Request request = new Request.Builder()
                                     .url("https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromCarTravel?distance=" + input + "&vehicle=" + spinner_car_text)
                                     .get()
-                                    .addHeader("x-rapidapi-key", "aaed0b37a1msh4673114dfa083a6p14111ejsnf86b67abc762")
+                                    .addHeader("x-rapidapi-key", "2277135e63msh0f82ad532a92f24p188d1bjsn4c952e0a2b35")
                                     .addHeader("x-rapidapi-host", "carbonfootprint1.p.rapidapi.com")
                                     .build();
 
