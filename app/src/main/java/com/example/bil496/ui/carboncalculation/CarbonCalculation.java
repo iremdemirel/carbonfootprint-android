@@ -75,10 +75,10 @@ public class CarbonCalculation extends Fragment{
         pieChart.getLegend().setEnabled(false);
 
         final ArrayList<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(flight_data.getFlight_data(), "Uçuş"));
-        yValues.add(new PieEntry(car_data.getCar_data(), "Araba"));
-        yValues.add(new PieEntry(motorbike_data.getMotorbike_data(), "Motorsiklet"));
-        yValues.add(new PieEntry(publictransport_data.getPublictransport_data(), "Toplu Taşıma"));
+        yValues.add(new PieEntry(flight_data.getFlight_data()+10f, "Uçuş"));
+        yValues.add(new PieEntry(car_data.getCar_data()+25.5f, "Araba"));
+        yValues.add(new PieEntry(motorbike_data.getMotorbike_data()+19f, "Motorsiklet"));
+        yValues.add(new PieEntry(publictransport_data.getPublictransport_data()+7.9f, "Toplu Taşıma"));
 
 
         pieChart.animate();
@@ -92,7 +92,7 @@ public class CarbonCalculation extends Fragment{
         data.setValueTextColor(Color.YELLOW);
         pieChart.setData(data);
 
-        activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);
+        //activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);
         flight =(LinearLayout) v.findViewById(R.id.fly_button);
         car = (LinearLayout) v.findViewById(R.id.car_button);
         bike = (LinearLayout) v.findViewById(R.id.bicycle_button);
@@ -101,13 +101,13 @@ public class CarbonCalculation extends Fragment{
         gas = (LinearLayout) v.findViewById(R.id.gas_button);
 
 
-        activejourney.setOnClickListener(new View.OnClickListener() {
+        /*activejourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), add_active_journey_menu.class));
             }
         });
-
+*/
         flight_data.setListener(new flight_data_listener.ChangeListener() {
             @Override
             public void onChange() {

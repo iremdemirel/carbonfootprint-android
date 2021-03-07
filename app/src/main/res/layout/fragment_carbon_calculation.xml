@@ -5,40 +5,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" tools:context=".ui.carboncalculation.CarbonCalculation">
+    android:orientation="vertical"
+    android:fitsSystemWindows="false"
+    tools:context=".ui.carboncalculation.CarbonCalculation">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/piechart"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        ></com.github.mikephil.charting.charts.PieChart>
-
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/piechart"
+            android:layout_width="350dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"></com.github.mikephil.charting.charts.PieChart>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_below="@+id/piechart"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textAlignment="center"
-                android:text="Karbon Ayak İzi Hesaplama"
-                android:textSize="24sp"
                 android:layout_marginTop="15dp"
                 android:gravity="center_horizontal"
+                android:text="Karbon Ayak İzi Hesaplama"
+                android:textAlignment="center"
                 android:textColor="@color/darkgreen"
-                />
+                android:textSize="24sp" />
 
-            <TextView
+            <!--TextView
                 android:id="@+id/active_journey_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -47,17 +45,17 @@
                 android:text="Aktif Yolculuk"
                 android:textSize="18sp"
                 android:textColor="@color/grey"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal" /-->
 
-            <View
+            <!--View
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:background="@android:color/darker_gray"/"-->
 
 
-            <LinearLayout
+            <!--LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -93,91 +91,93 @@
                         android:gravity="center_horizontal" />
 
                 </LinearLayout>
-            </LinearLayout>
+            </LinearLayout-->
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:padding="8dp"
                 android:text="Geçmiş Yolculuk"
-                android:textSize="18sp"
                 android:textColor="@color/grey"
-                android:gravity="center_horizontal" />
+                android:textSize="18sp" />
 
             <View
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="4"
-                android:baselineAligned="false">
+                android:weightSum="4">
+
                 <LinearLayout
                     android:id="@+id/fly_button"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:background="@color/lightgreen"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        app:tint="@color/grey"
-                        android:src="@drawable/ic_airplane" />
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_airplane"
+                        app:tint="@color/grey" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
                         android:text="@string/ucak"
-                        android:textSize="18sp"
                         android:textAlignment="center"
                         android:textColor="#ffffff"
-                        android:gravity="center_horizontal" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/car_button"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:background="@color/lightgreen"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        app:tint="@color/grey"
-                        android:src="@drawable/ic_car" />
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_car"
+                        app:tint="@color/grey" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
                         android:text="@string/araba"
-                        android:textSize="18sp"
                         android:textAlignment="center"
                         android:textColor="#ffffff"
-                        android:gravity="center_horizontal" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -185,28 +185,29 @@
                     android:id="@+id/bus_button"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:background="@color/lightgreen"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        app:tint="@color/grey"
-                        android:src="@drawable/ic_bus"/>
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_bus"
+                        app:tint="@color/grey" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
                         android:text="@string/otobus"
-                        android:textSize="18sp"
                         android:textColor="#ffffff"
-                        android:gravity="center_horizontal" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -214,28 +215,29 @@
                     android:id="@+id/bicycle_button"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:background="@color/lightgreen"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/ic_motorcycle"
                         app:tint="@color/grey" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
                         android:text="Motorsiklet"
-                        android:textSize="18sp"
                         android:textColor="#ffffff"
-                        android:gravity="center_horizontal" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -243,57 +245,58 @@
             </LinearLayout>
 
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="8dp"
                 android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:padding="8dp"
                 android:text="Utility"
-                android:textSize="18sp"
                 android:textColor="#707070"
-                android:gravity="center_horizontal" />
+                android:textSize="18sp" />
 
             <View
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/darker_gray" />
 
             <!-- Second Row-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:baselineAligned="false">
+                android:weightSum="2">
+
                 <LinearLayout
                     android:id="@+id/electricity_button"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:background="@color/lightgreen"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        app:tint="@color/grey"
-                        android:src="@drawable/ic_electricity"/>
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_electricity"
+                        app:tint="@color/grey" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
                         android:text="@string/elektrik"
-                        android:textSize="18sp"
                         android:textColor="#ffffff"
-                        android:gravity="center_horizontal" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -301,37 +304,37 @@
                     android:id="@+id/gas_button"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="50dp"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:background="@color/lightgreen"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        app:tint="@color/grey"
-                        android:src="@drawable/ic_gas"/>
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_gas"
+                        app:tint="@color/grey" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
                         android:text="@string/dogalgaz"
-                        android:textSize="18sp"
                         android:textColor="#ffffff"
-                        android:gravity="center_horizontal" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
             <!-- End Second Row-->
 
         </LinearLayout>
-   </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
+</ScrollView>
