@@ -3,12 +3,14 @@ package com.example.bil496.ui.carboncalculation;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.bil496.R;
 import com.example.bil496.ui.carboncalculation.add_menus.add_active_journey_menu;
@@ -24,13 +26,15 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javax.xml.datatype.Duration;
 
 public class CarbonCalculation extends Fragment{
-    private static final int TARGET_FRAGMENT_REQUEST_CODE = 1;
-    private static final String EXTRA_GREETING_MESSAGE = "message";
 
     public static car_data_listener car_data = new car_data_listener(0);
     public static flight_data_listener flight_data = new flight_data_listener(0);
@@ -168,7 +172,7 @@ public class CarbonCalculation extends Fragment{
         bus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final add_publictransport_menu dialog = new add_publictransport_menu();
+                add_publictransport_menu dialog = new add_publictransport_menu();
                 dialog.show(getFragmentManager(), "add_publictransport_menu");
             }
         });

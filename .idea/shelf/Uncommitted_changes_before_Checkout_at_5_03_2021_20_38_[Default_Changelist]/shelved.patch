@@ -1,0 +1,165 @@
+Index: app/src/main/res/layout/activity_add_car_activity.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carboncalculation.add_menus.add_car_activity\">\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_car_activity.xml	(revision c0297120467964385a11bf14227d1bf23e8623fb)
++++ app/src/main/res/layout/activity_add_car_activity.xml	(date 1614801890021)
+@@ -1,9 +1,101 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     tools:context=".ui.carboncalculation.add_menus.add_car_activity">
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++    <RelativeLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:paddingLeft="@dimen/activity_horizontal_margin"
++        android:paddingTop="@dimen/activity_vertical_margin"
++        android:paddingRight="@dimen/activity_horizontal_margin"
++        android:paddingBottom="@dimen/activity_vertical_margin">
++
++        <EditText
++            android:id="@+id/edit_vehicleNickname"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="17dp"
++            android:ems="10"
++            android:hint="Name"
++            android:inputType="textPersonName" />
++
++        <TextView
++            android:id="@+id/txt_make"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/edit_vehicleNickname"
++            android:layout_alignParentStart="true"
++            android:layout_alignParentLeft="true"
++            android:text="Make"
++            android:textSize="14sp" />
++
++        <Spinner
++            android:id="@+id/spinner_year"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/txt_year"
++            android:layout_alignStart="@+id/txt_year"
++            android:layout_alignLeft="@+id/txt_year" />
++
++        <Spinner
++            android:id="@+id/spinner_model"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/txt_model"
++            android:layout_alignStart="@+id/txt_model"
++            android:layout_alignLeft="@+id/txt_model"
++            android:layout_alignParentEnd="true"
++            android:layout_alignParentRight="true" />
++
++        <TextView
++            android:id="@+id/txt_year"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/spinner_model"
++            android:layout_alignParentStart="true"
++            android:layout_alignParentLeft="true"
++            android:text="Year"
++            android:textSize="14sp" />
++
++        <Spinner
++            android:id="@+id/spinner_make"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/txt_make"
++            android:layout_alignParentStart="true"
++            android:layout_alignParentLeft="true" />
++
++        <TextView
++            android:id="@+id/txt_model"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/spinner_make"
++            android:layout_alignParentStart="true"
++            android:layout_alignParentLeft="true"
++            android:text="Model"
++            android:textSize="14sp" />
++
++        <TextView
++            android:id="@+id/textView3"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_alignParentStart="true"
++            android:layout_alignParentLeft="true"
++            android:text="Select please" />
++
++        <Button
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/spinner_year"
++            android:layout_alignParentBottom="true"
++            android:layout_marginTop="101dp"
++            android:layout_marginBottom="375dp" />
++
++
++    </RelativeLayout>
++
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/bil496/ui/carboncalculation/add_menus/add_car_activity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carboncalculation.add_menus;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.example.bil496.R;\r\n\r\npublic class add_car_activity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_car_activity);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carboncalculation/add_menus/add_car_activity.java	(revision c0297120467964385a11bf14227d1bf23e8623fb)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/add_menus/add_car_activity.java	(date 1614802076540)
+@@ -2,15 +2,39 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
++import android.widget.EditText;
++import android.widget.Spinner;
+ 
+ import com.example.bil496.R;
+ 
+ public class add_car_activity extends AppCompatActivity {
+ 
++    private long vehicleID; //this is the id is DB
++    private Spinner MakeSelect;
++    private Spinner ModelSelect;
++    private Spinner YearSelect;
++    private String SelectedMake;
++    private String SelectedModel;
++    private String SelectedYear;
++    private String TAG_ADD_VEHICLE_PAGE = "add_vehicle_page";
++    private Intent IntentMode;
++    private String mode;
++    private EditText CarNameInput;
++    private boolean toPreselect;
++    private long carID;
++
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_add_car_activity);
++
++        CarNameInput =  (EditText)findViewById(R.id.edit_vehicleNickname);
++        MakeSelect = (Spinner)findViewById(R.id.spinner_make);
++        ModelSelect = (Spinner)findViewById(R.id.spinner_model);
++        YearSelect = (Spinner)findViewById(R.id.spinner_year);
++
++
+     }
+ }
+\ No newline at end of file

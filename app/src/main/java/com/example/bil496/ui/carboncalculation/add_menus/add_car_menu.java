@@ -1,10 +1,6 @@
 package com.example.bil496.ui.carboncalculation.add_menus;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
 import com.example.bil496.R;
 import com.example.bil496.ui.carboncalculation.CarbonCalculation;
 
@@ -32,7 +26,6 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
     private EditText car_journey_distance;
     String spinner_car_text;
     TextView mActionOk, mActionCancel;
-    String toastText;
 
     @Nullable
     @Override
@@ -84,9 +77,7 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
                     }
                 });
                 thread.start();
-                CarbonCalculation.pieChart.notifyDataSetChanged();
-                CarbonCalculation.pieChart.invalidate();
-                getDialog().dismiss();
+
             }
         });
         return v;

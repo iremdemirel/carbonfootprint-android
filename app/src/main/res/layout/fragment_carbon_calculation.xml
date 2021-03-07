@@ -135,7 +135,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_gravity="center"
                         app:tint="@color/grey"
-                        android:src="@drawable/ic_car" />
+                        android:src="@drawable/ic_airplane" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_bike"
+                        android:src="@drawable/ic_motorcycle"
                         app:tint="@color/grey" />
                     <TextView
                         android:layout_width="match_parent"
@@ -232,7 +232,7 @@
                         android:padding="8dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/darkgreen"
-                        android:text="@string/bisiklet"
+                        android:text="Motorsiklet"
                         android:textSize="18sp"
                         android:textColor="#ffffff"
                         android:gravity="center_horizontal" />
