@@ -65,7 +65,7 @@ public class add_motorbike_menu extends DialogFragment implements AdapterView.On
                             Request request = new Request.Builder()
                                     .url("https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromMotorBike?distance="+ input + "&type=" + spinner_motorbike_text)
                                     .get()
-                                    .addHeader("x-rapidapi-key", "aaed0b37a1msh4673114dfa083a6p14111ejsnf86b67abc762")
+                                    .addHeader("x-rapidapi-key", "2277135e63msh0f82ad532a92f24p188d1bjsn4c952e0a2b35")
                                     .addHeader("x-rapidapi-host", "carbonfootprint1.p.rapidapi.com")
                                     .build();
 

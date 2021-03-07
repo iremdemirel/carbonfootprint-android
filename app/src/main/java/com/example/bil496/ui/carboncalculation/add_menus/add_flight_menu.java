@@ -62,7 +62,7 @@ public class add_flight_menu extends DialogFragment implements AdapterView.OnIte
                             Request request = new Request.Builder()
                                     .url("https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromFlight?distance="+ input + "&type=" + spinner_flight_text)
                                     .get()
-                                    .addHeader("x-rapidapi-key", "aaed0b37a1msh4673114dfa083a6p14111ejsnf86b67abc762")
+                                    .addHeader("x-rapidapi-key", "2277135e63msh0f82ad532a92f24p188d1bjsn4c952e0a2b35")
                                     .addHeader("x-rapidapi-host", "carbonfootprint1.p.rapidapi.com")
                                     .build();
 
