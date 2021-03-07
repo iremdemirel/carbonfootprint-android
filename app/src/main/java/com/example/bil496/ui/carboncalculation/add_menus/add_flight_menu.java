@@ -14,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.bil496.R;
+import com.example.bil496.ui.carboncalculation.CarbonCalculation;
+
+import org.json.JSONObject;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -65,7 +68,9 @@ public class add_flight_menu extends DialogFragment implements AdapterView.OnIte
 
 
                             Response response = client.newCall(request).execute();
-                            System.out.println(response.body().string());
+                            JSONObject reader = new JSONObject(response.body().string());
+
+                            CarbonCalculation.flight_data.setFlight_data( CarbonCalculation.flight_data.getFlight_data()+Float.parseFloat(""+reader.getDouble("carbonEquivalent")));
 
                         } catch (Exception e) {
                             System.out.println(e.getMessage() + "EEEEEEEEEEEEEEEEEEEEEEEE");

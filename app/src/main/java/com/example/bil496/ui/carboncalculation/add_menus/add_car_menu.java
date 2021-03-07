@@ -1,6 +1,10 @@
 package com.example.bil496.ui.carboncalculation.add_menus;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.bil496.R;
+import com.example.bil496.ui.carboncalculation.CarbonCalculation;
+
+import org.json.JSONObject;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,6 +32,7 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
     private EditText car_journey_distance;
     String spinner_car_text;
     TextView mActionOk, mActionCancel;
+    String toastText;
 
     @Nullable
     @Override
@@ -48,7 +59,6 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
             @Override
             public void onClick(final View v) {
                 final String input = car_journey_distance.getText().toString();
-                getDialog().dismiss();
                 final Thread thread = new Thread(new Runnable() {
 
                     @Override
@@ -62,9 +72,10 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
                                     .addHeader("x-rapidapi-host", "carbonfootprint1.p.rapidapi.com")
                                     .build();
 
-
                             Response response = client.newCall(request).execute();
-                            System.out.println(response.body().string());
+                            JSONObject reader = new JSONObject(response.body().string());
+
+                            CarbonCalculation.car_data.setCar_data( CarbonCalculation.car_data.getCar_data()+Float.parseFloat(""+reader.getDouble("carbonEquivalent")));
 
                         } catch (Exception e) {
                             System.out.println(e.getMessage() + "EEEEEEEEEEEEEEEEEEEEEEEE");
@@ -72,9 +83,10 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
                         }
                     }
                 });
-
                 thread.start();
-
+                CarbonCalculation.pieChart.notifyDataSetChanged();
+                CarbonCalculation.pieChart.invalidate();
+                getDialog().dismiss();
             }
         });
         return v;
@@ -89,4 +101,5 @@ public class add_car_menu extends DialogFragment implements AdapterView.OnItemSe
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }
