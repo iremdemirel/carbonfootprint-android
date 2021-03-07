@@ -75,13 +75,13 @@ public class CarbonCalculation extends Fragment{
         pieChart.getLegend().setEnabled(false);
 
         final ArrayList<PieEntry> yValues = new ArrayList<>();
+      
         yValues.add(new PieEntry(flight_data.getFlight_data()+10f, "Uçuş"));
         yValues.add(new PieEntry(car_data.getCar_data()+25.5f, "Araba"));
         yValues.add(new PieEntry(motorbike_data.getMotorbike_data()+19f, "Motorsiklet"));
         yValues.add(new PieEntry(publictransport_data.getPublictransport_data()+7.9f, "Toplu Taşıma"));
 
-
-        pieChart.animate();
+      pieChart.animate();
         dataSet = new PieDataSet(yValues,"Countries");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
