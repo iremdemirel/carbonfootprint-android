@@ -71,7 +71,7 @@ public class CarbonCalculation extends Fragment{
         pieChart.getLegend().setEnabled(false);
 
         final ArrayList<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(flight_data.getFlight_data(), "Uçuş"));
+        yValues.add(new PieEntry(flight_data.getFlight_data()+100f, "Uçuş"));//değişecek
         yValues.add(new PieEntry(car_data.getCar_data(), "Araba"));
         yValues.add(new PieEntry(motorbike_data.getMotorbike_data(), "Motorsiklet"));
         yValues.add(new PieEntry(publictransport_data.getPublictransport_data(), "Toplu Taşıma"));
