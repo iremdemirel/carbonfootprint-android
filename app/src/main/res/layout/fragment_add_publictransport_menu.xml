@@ -17,7 +17,7 @@
             android:layout_alignStart="@+id/edit_publictransport_distance"
             android:layout_alignLeft="@+id/edit_publictransport_distance"
             android:layout_marginTop="10dp"
-            android:autofillHints="Lütfen seçiniz" />
+            android:autofillHints="Vehicle Type" />
 
         <EditText
             android:id="@+id/edit_publictransport_distance"
@@ -27,7 +27,7 @@
             android:layout_marginTop="17dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="Mesafe (km)"
+            android:hint="Distance"
             android:inputType="number" />
 
         <TextView
