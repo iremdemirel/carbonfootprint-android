@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,11 +42,10 @@ public class MainActivity extends AppCompatActivity {
     TextView bio;
     EditText editbio;
     AlertDialog dialog;
-    Button editBioButton;
+
     DatabaseReference reference;
     AlertDialog addPostScreen;
-    //EditText postHeader, postDescription;
-    Button postButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,31 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                reference.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if ((dataSnapshot.child("email").exists())) {
-
-                            //ArrayList<Blog> arrayList = dataSnapshot.child("blog").getValue(ArrayList.class);
-                            //arrayList.add(newPost);
-
-                            reference.child("Users").child(currentUserID).child("blog").child(new Date().toString()).setValue(new BlogText(postHeader.getText().toString(), postDescription.getText().toString())).addOnSuccessListener(new OnSuccessListener() {
-                                @Override
-                                public void onSuccess(Object o) {
-                                    Toast.makeText(MainActivity.this, "Veritabanına yeni gönderi kaydedildi", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        } else {
-                            Toast.makeText(MainActivity.this, "Veritabanında kullanıcı kayıtlı degil", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(MainActivity.this, "Veritabanına yeni gönderi kaydedilmedi", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                reference.child("Users").child(currentUserID).child("blog").push().setValue(newPost);
 
             }
         });
