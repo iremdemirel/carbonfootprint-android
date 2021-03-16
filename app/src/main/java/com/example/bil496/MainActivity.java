@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,10 +18,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bil496.forFirebase.Users;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog dialog;
     Button editBioButton;
     DatabaseReference reference;
+
+    AlertDialog friendPopup;
+    private FirebaseRecyclerOptions<Users> posts;
+    private FirebaseRecyclerAdapter<Users, FriendViewHolder> adapter;
+
+    private String currentUserID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -60,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             insertUsertoDatabase();
         }
 
+        currentUserID = FirebaseAuth.getInstance().getUid();
 
         // web scraping for foundations bulletin
         WebScrapingTema temaScraper = new WebScrapingTema();
@@ -76,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if ((dataSnapshot.child("email").exists())) {
-                    Toast.makeText(MainActivity.this, "Veritabanına kayıt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Veritabanına kayıtlı", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseReference ref = reference.child("Users").child(currentUserID);
 
@@ -113,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Logout failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Logout başarısız", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -163,4 +177,84 @@ public class MainActivity extends AppCompatActivity {
         editbio.setText(bio.getText());
         dialog.show();
     }
+
+    //Opens a popup to add friend
+    public void addFriendPopup(final View view) {
+
+        Toast.makeText(this, "in add friend popup main", Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = (View) inflater.inflate(R.layout.friend_dialog_layout, null);
+
+        builder.setView(dialogView);
+
+        RecyclerView rv = (RecyclerView) dialogView.findViewById(R.id.dialogRecycler);
+        rv.hasFixedSize();
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+
+        posts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users"), Users.class).build();
+        adapter = new FirebaseRecyclerAdapter<Users, FriendViewHolder>(posts) {
+            @NonNull
+            @Override
+            public FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_view_layout, parent, false);
+                return new FriendViewHolder(view);
+
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull FriendViewHolder holder, final int position, @NonNull final Users model) {
+                holder.friendName.setText(model.getName());
+                holder.friendEmail.setText(model.getEmail());
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        final String key = getRef(position).getKey();
+                        Toast.makeText(MainActivity.this, "key:" + key, Toast.LENGTH_SHORT).show();
+
+
+                        reference.child("Users").child(currentUserID).child("friends").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (key != null) {
+                                    if ((dataSnapshot.hasChild(key))) {
+
+                                        Toast.makeText(MainActivity.this, "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
+
+                                    } else {
+                                        reference.child("Users").child(currentUserID).child("friends").child(key).setValue(model);
+                                        Toast.makeText(MainActivity.this, "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Toast.makeText(MainActivity.this, "Veritabanına arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        friendPopup.dismiss();
+                    }
+                });
+
+
+            }
+
+
+        };
+
+        adapter.startListening();
+        rv.setAdapter(adapter);
+
+        friendPopup = builder.create();
+
+        friendPopup.show();
+
+    }
 }
+
