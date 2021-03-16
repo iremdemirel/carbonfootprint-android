@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,6 +109,34 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
+
+            //for friends view
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
+            posts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users").child(currentUserID).child("friends"), Users.class).build();
+            adapter = new FirebaseRecyclerAdapter<Users, FriendViewHolder>(posts) {
+                @NonNull
+                @Override
+                public FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_view_layout, parent, false);
+                    return new FriendViewHolder(view);
+
+                }
+
+                @Override
+                protected void onBindViewHolder(@NonNull FriendViewHolder holder, int position, @NonNull Users model) {
+                    holder.friendName.setText(model.getName());
+                    holder.friendEmail.setText(model.getEmail());
+
+                }
+            };
+
+            adapter.startListening();
+            recyclerView.setAdapter(adapter);
+
+            RecyclerView.ItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
+            recyclerView.addItemDecoration(divider);
 
         }
     }
