@@ -15,4 +15,5 @@
     <string name="LOGOUT">LOGOUT</string>
     <string name="bio_d_zenle">Bio düzenle</string>
     <string name="arkadaslar">ARKADAŞLAR</string>
+    <string name="arkadasekle">Arkadaş ekle</string>
 </resources>

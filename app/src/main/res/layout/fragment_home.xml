@@ -124,4 +124,19 @@
         app:layout_constraintTop_toBottomOf="@+id/editBio"
         app:layout_constraintVertical_bias="0.76" />
 
+    <Button
+        android:id="@+id/toAddFriendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="addFriendPopup"
+        android:text="@string/arkadasekle"
+        app:layout_constraintBottom_toBottomOf="@+id/friendrecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/friendrecyclerView"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="@+id/friendrecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/friendrecyclerView"
+        app:layout_constraintVertical_bias="0.703" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
