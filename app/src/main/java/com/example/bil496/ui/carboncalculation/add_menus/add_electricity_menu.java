@@ -18,11 +18,10 @@ import com.example.bil496.model.Utility;
 import com.example.bil496.ui.carboncalculation.CarbonCalculation;
 import java.util.Calendar;
 
-public class add_gas_menu extends DialogFragment {
+public class add_electricity_menu extends DialogFragment {
     private Utility newUtility;
     private double billAmount;
     private int numPeople;
-    private long interval;
     private String billStart;
     private String billEnd;
     TextView txt_billDateTo;
@@ -99,7 +98,7 @@ public class add_gas_menu extends DialogFragment {
                 numPeople = Integer.parseInt(people);
                 billStart = txt_billDateFrom.getText().toString();
                 billEnd = txt_billDateTo.getText().toString();
-                newUtility = new Utility("Natural Gas", billStart, billEnd, billAmount, numPeople);
+                newUtility = new Utility("Electricity", billStart, billEnd, billAmount, numPeople);
                 double d = newUtility.getTotalEmission();
                 getDialog().dismiss();
                 CarbonCalculation.gas_data.setGas_data(CarbonCalculation.gas_data.getGas_data() + Float.parseFloat("" + d));

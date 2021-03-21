@@ -13,11 +13,13 @@ import android.widget.LinearLayout;
 
 import com.example.bil496.R;
 import com.example.bil496.ui.carboncalculation.add_menus.add_car_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_electricity_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_flight_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_gas_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_motorbike_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_publictransport_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.car_data_listener;
+import com.example.bil496.ui.carboncalculation.add_menus.electricity_data_listener;
 import com.example.bil496.ui.carboncalculation.add_menus.flight_data_listener;
 import com.example.bil496.ui.carboncalculation.add_menus.gas_data_listener;
 import com.example.bil496.ui.carboncalculation.add_menus.motorbike_data_listener;
@@ -37,6 +39,8 @@ public class CarbonCalculation extends Fragment{
     public static motorbike_data_listener motorbike_data = new motorbike_data_listener(0);
     public static publictransport_data_listener publictransport_data = new publictransport_data_listener(0);
     public static gas_data_listener gas_data = new gas_data_listener(0);
+    public static electricity_data_listener electricity_data = new electricity_data_listener(0);
+
 
 
     private LinearLayout activejourney;
@@ -79,6 +83,8 @@ public class CarbonCalculation extends Fragment{
         yValues.add(new PieEntry(motorbike_data.getMotorbike_data()+19f, "Motorsiklet"));
         yValues.add(new PieEntry(publictransport_data.getPublictransport_data()+7.9f, "Toplu Taşıma"));
         yValues.add(new PieEntry(gas_data.getGas_data()+9f, "Doğal gaz"));
+        yValues.add(new PieEntry(electricity_data.getElectricity_data()+9f, "Elektrik"));
+
 
       pieChart.animate();
         dataSet = new PieDataSet(yValues,"Countries");
@@ -99,14 +105,6 @@ public class CarbonCalculation extends Fragment{
         electricity = (LinearLayout) v.findViewById(R.id.electricity_button);
         gas = (LinearLayout) v.findViewById(R.id.gas_button);
 
-
-        /*activejourney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), add_active_journey_menu.class));
-            }
-        });
-*/
         flight_data.setListener(new flight_data_listener.ChangeListener() {
             @Override
             public void onChange() {
@@ -176,13 +174,21 @@ public class CarbonCalculation extends Fragment{
             }
         });
 
-       /*electricity.setOnClickListener(new View.OnClickListener() {
+        electricity_data.setListener(new electricity_data_listener.ChangeListener() {
+            @Override
+            public void onChange() {
+                yValues.set(5, new PieEntry(electricity_data.getElectricity_data(),"Elektrik"));
+                pieChart.notifyDataSetChanged();
+                pieChart.invalidate();
+            }
+        });
+        electricity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), add_electricity_menu.class));
             }
         });
-*/
+
        gas_data.setListener(new gas_data_listener.ChangeListener() {
            @Override
            public void onChange() {
