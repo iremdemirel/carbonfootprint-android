@@ -1,0 +1,792 @@
+Index: app/src/main/java/com/example/bil496/ui/dashboard/DashboardFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.dashboard;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.TextView;\r\n\r\nimport com.example.bil496.LoginActivity;\r\nimport com.example.bil496.ui.carbonfootprintcalculation.*;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.bil496.R;\r\n\r\n\r\npublic class DashboardFragment extends Fragment {\r\n\r\n    private LinearLayout activejourney;\r\n    private LinearLayout car;\r\n    private LinearLayout bike;\r\n    private LinearLayout bus;\r\n    private LinearLayout electricity;\r\n    private LinearLayout gas;\r\n    private View v;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        return inflater.inflate(R.layout.fragment_dashboard, container, false);\r\n    }\r\n\r\n    @Override\r\n    public void onActivityCreated(@Nullable Bundle savedInstanceState) {\r\n        super.onActivityCreated(savedInstanceState);\r\n\r\n        v = getView();\r\n        activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);\r\n        car = (LinearLayout) v.findViewById(R.id.car_button);\r\n        bike = (LinearLayout) v.findViewById(R.id.bicycle_button);\r\n        bus = (LinearLayout) v.findViewById(R.id.bus_button);\r\n        electricity = (LinearLayout) v.findViewById(R.id.electricity_button);\r\n        gas = (LinearLayout) v.findViewById(R.id.gas_button);\r\n\r\n\r\n        activejourney.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                startActivity(new Intent(v.getContext(), add_active_journey_menu.class));\r\n            }\r\n        });\r\n\r\n        car.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                startActivity(new Intent(v.getContext(), add_car_menu.class));\r\n            }\r\n        });\r\n\r\n        bike.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                startActivity(new Intent(v.getContext(), add_bike_menu.class));\r\n            }\r\n        });\r\n\r\n        bus.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                startActivity(new Intent(v.getContext(), add_bus_menu.class));\r\n            }\r\n        });\r\n\r\n        electricity.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                startActivity(new Intent(v.getContext(), add_electricity_menu.class));\r\n            }\r\n        });\r\n\r\n        gas.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                startActivity(new Intent(v.getContext(), add_gas_menu.class));\r\n            }\r\n        });\r\n\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/dashboard/DashboardFragment.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/dashboard/DashboardFragment.java	(date 1614778168051)
+@@ -1,94 +1,35 @@
+ package com.example.bil496.ui.dashboard;
+ 
+-import android.content.Intent;
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+-import android.widget.LinearLayout;
+ import android.widget.TextView;
+ 
+-import com.example.bil496.LoginActivity;
+-import com.example.bil496.ui.carbonfootprintcalculation.*;
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.fragment.app.Fragment;
++import androidx.lifecycle.Observer;
++import androidx.lifecycle.ViewModelProviders;
+ 
+ import com.example.bil496.R;
+ 
+-
+ public class DashboardFragment extends Fragment {
+ 
+-    private LinearLayout activejourney;
+-    private LinearLayout car;
+-    private LinearLayout bike;
+-    private LinearLayout bus;
+-    private LinearLayout electricity;
+-    private LinearLayout gas;
+-    private View v;
+-
+-    @Nullable
+-    @Override
+-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+-    }
++    private DashboardViewModel dashboardViewModel;
+ 
+-    @Override
+-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+-        super.onActivityCreated(savedInstanceState);
+-
+-        v = getView();
+-        activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);
+-        car = (LinearLayout) v.findViewById(R.id.car_button);
+-        bike = (LinearLayout) v.findViewById(R.id.bicycle_button);
+-        bus = (LinearLayout) v.findViewById(R.id.bus_button);
+-        electricity = (LinearLayout) v.findViewById(R.id.electricity_button);
+-        gas = (LinearLayout) v.findViewById(R.id.gas_button);
+-
+-
+-        activejourney.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                startActivity(new Intent(v.getContext(), add_active_journey_menu.class));
+-            }
+-        });
+-
+-        car.setOnClickListener(new View.OnClickListener() {
++    public View onCreateView(@NonNull LayoutInflater inflater,
++                             ViewGroup container, Bundle savedInstanceState) {
++        dashboardViewModel =
++                ViewModelProviders.of(this).get(DashboardViewModel.class);
++        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
++        final TextView textView = root.findViewById(R.id.text_dashboard);
++        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+             @Override
+-            public void onClick(View v) {
+-                startActivity(new Intent(v.getContext(), add_car_menu.class));
+-            }
+-        });
+-
+-        bike.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                startActivity(new Intent(v.getContext(), add_bike_menu.class));
+-            }
+-        });
+-
+-        bus.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                startActivity(new Intent(v.getContext(), add_bus_menu.class));
+-            }
+-        });
+-
+-        electricity.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                startActivity(new Intent(v.getContext(), add_electricity_menu.class));
+-            }
+-        });
+-
+-        gas.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                startActivity(new Intent(v.getContext(), add_gas_menu.class));
++            public void onChanged(@Nullable String s) {
++                textView.setText(s);
+             }
+         });
+-
+-
+-
++        return root;
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/navigation/mobile_navigation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/mobile_navigation\"\r\n    app:startDestination=\"@+id/navigation_home\">\r\n\r\n    <fragment\r\n        android:id=\"@+id/navigation_home\"\r\n        android:name=\"com.example.bil496.ui.home.HomeFragment\"\r\n        android:label=\"@string/title_home\"\r\n        tools:layout=\"@layout/fragment_home\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/navigation_dashboard\"\r\n        android:name=\"com.example.bil496.ui.dashboard.DashboardFragment\"\r\n        android:label=\"@string/title_dashboard\"\r\n        tools:layout=\"@layout/fragment_dashboard\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/navigation_notifications\"\r\n        android:name=\"com.example.bil496.ui.notifications.NotificationsFragment\"\r\n        android:label=\"@string/title_notifications\"\r\n        tools:layout=\"@layout/fragment_notifications\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/navigation_foundations\"\r\n        android:name=\"com.example.bil496.ui.foundations.FoundationFragment\"\r\n        android:label=\"Foundations\"\r\n        tools:layout=\"@layout/fragment_foundation\" />\r\n</navigation>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/navigation/mobile_navigation.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/navigation/mobile_navigation.xml	(date 1614777828776)
+@@ -11,6 +11,12 @@
+         android:label="@string/title_home"
+         tools:layout="@layout/fragment_home" />
+ 
++    <fragment
++        android:id="@+id/carboncalculation"
++        android:name="com.example.bil496.ui.carboncalculation.CarbonCalculation"
++        android:label="Carbon Footprint Calculation"
++        tools:layout="@layout/fragment_carbon_calculation" />
++
+     <fragment
+         android:id="@+id/navigation_dashboard"
+         android:name="com.example.bil496.ui.dashboard.DashboardFragment"
+Index: app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_active_journey_menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carbonfootprintcalculation;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.os.Bundle;\r\nimport android.widget.TextView;\r\n\r\nimport com.example.bil496.R;\r\n\r\npublic class add_active_journey_menu extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_active_journey_menu);\r\n\r\n        Toolbar toolbar = (Toolbar) findViewById(R.id.add_utility_toolbar);\r\n        setSupportActionBar(toolbar);\r\n        TextView title = (TextView) findViewById(R.id.add_utility_toolbar_title);\r\n        title.setText(\"hi\");\r\n\r\n\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_active_journey_menu.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/carbonfootprintcalculation/add_active_journey_menu.java	(date 1614778084340)
+@@ -1,4 +1,4 @@
+-package com.example.bil496.ui.carbonfootprintcalculation;
++package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.appcompat.widget.Toolbar;
+Index: app/src/main/res/menu/bottom_nav_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n\r\n    <item\r\n        android:id=\"@+id/navigation_home\"\r\n        android:icon=\"@drawable/ic_home_black_24dp\"\r\n        android:title=\"@string/title_home\" />\r\n\r\n    <item\r\n        android:id=\"@+id/navigation_dashboard\"\r\n        android:icon=\"@drawable/ic_dashboard_black_24dp\"\r\n        android:title=\"@string/title_dashboard\" />\r\n\r\n    <item\r\n        android:id=\"@+id/navigation_notifications\"\r\n        android:icon=\"@drawable/ic_notifications_black_24dp\"\r\n        android:title=\"@string/title_notifications\" />\r\n    <item\r\n        android:id=\"@+id/navigation_foundations\"\r\n        android:icon=\"@drawable/ic_foundations\"\r\n        android:title=\"@string/title_foundations\" />\r\n\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/bottom_nav_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/menu/bottom_nav_menu.xml	(date 1614777826476)
+@@ -6,6 +6,11 @@
+         android:icon="@drawable/ic_home_black_24dp"
+         android:title="@string/title_home" />
+ 
++    <item
++        android:id="@+id/carboncalculation"
++        android:icon="@drawable/ic_route"
++        android:title="Carbon Footprint Calculation" />
++
+     <item
+         android:id="@+id/navigation_dashboard"
+         android:icon="@drawable/ic_dashboard_black_24dp"
+Index: app/src/main/java/com/example/bil496/ui/carboncalculation/CarbonCalculation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carboncalculation/CarbonCalculation.java	(date 1614778084158)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/CarbonCalculation.java	(date 1614778084158)
+@@ -0,0 +1,96 @@
++package com.example.bil496.ui.carboncalculation;
++
++import android.content.Intent;
++import android.os.Bundle;
++
++import androidx.annotation.Nullable;
++import androidx.fragment.app.Fragment;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.LinearLayout;
++
++import com.example.bil496.R;
++import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_active_journey_menu;
++import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_bike_menu;
++import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_bus_menu;
++import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_car_menu;
++import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_electricity_menu;
++import com.example.bil496.ui.carboncalculation.carbonfootprintcalculation.add_gas_menu;
++
++public class CarbonCalculation extends Fragment {
++
++    private LinearLayout activejourney;
++    private LinearLayout car;
++    private LinearLayout bike;
++    private LinearLayout bus;
++    private LinearLayout electricity;
++    private LinearLayout gas;
++    private View v;
++
++    @Nullable
++    @Override
++    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        return inflater.inflate(R.layout.fragment_dashboard, container, false);
++    }
++
++    @Override
++    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
++        super.onActivityCreated(savedInstanceState);
++
++        v = getView();
++        activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);
++        car = (LinearLayout) v.findViewById(R.id.car_button);
++        bike = (LinearLayout) v.findViewById(R.id.bicycle_button);
++        bus = (LinearLayout) v.findViewById(R.id.bus_button);
++        electricity = (LinearLayout) v.findViewById(R.id.electricity_button);
++        gas = (LinearLayout) v.findViewById(R.id.gas_button);
++
++
++        activejourney.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                startActivity(new Intent(v.getContext(), add_active_journey_menu.class));
++            }
++        });
++
++        car.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                startActivity(new Intent(v.getContext(), add_car_menu.class));
++            }
++        });
++
++        bike.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                startActivity(new Intent(v.getContext(), add_bike_menu.class));
++            }
++        });
++
++        bus.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                startActivity(new Intent(v.getContext(), add_bus_menu.class));
++            }
++        });
++
++        electricity.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                startActivity(new Intent(v.getContext(), add_electricity_menu.class));
++            }
++        });
++
++        gas.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                startActivity(new Intent(v.getContext(), add_gas_menu.class));
++            }
++        });
++
++
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_carbon_calculation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_carbon_calculation.xml	(date 1614778084142)
++++ app/src/main/res/layout/fragment_carbon_calculation.xml	(date 1614778084142)
+@@ -0,0 +1,303 @@
++<?xml version="1.0" encoding="utf-8"?>
++
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical" tools:context=".ui.carboncalculation.CarbonCalculation">
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:background="#ffffff">
++
++
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="vertical"
++            >
++
++            <TextView
++                android:layout_width="match_parent"
++                android:layout_height="50dp"
++                android:textAlignment="center"
++                android:text="Karbon Ayak İzi Hesaplama"
++                android:textSize="24sp"
++                android:layout_marginTop="15dp"
++                android:gravity="center_horizontal"
++                android:textColor="@color/darkgreen"
++                />
++
++            <TextView
++                android:id="@+id/active_journey_text"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:padding="8dp"
++                android:layout_marginTop="15dp"
++                android:text="Aktif Yolculuk"
++                android:textSize="18sp"
++                android:textColor="@color/grey"
++                android:gravity="center_horizontal" />
++
++            <View
++                android:layout_marginBottom="10dp"
++                android:layout_marginTop="10dp"
++                android:layout_width="match_parent"
++                android:layout_height="1dp"
++                android:background="@android:color/darker_gray"/>
++
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:orientation="horizontal"
++                android:weightSum="1"
++                android:baselineAligned="false">
++                <LinearLayout
++                    android:id="@+id/active_journey_button"
++                    android:layout_width="0dp"
++                    android:layout_height="120dp"
++                    android:layout_weight="1"
++                    android:layout_margin="2dp"
++                    android:orientation="vertical"
++                    android:background="@color/lightgreen"
++                    >
++                    <ImageView
++                        android:layout_width="40dp"
++                        android:layout_height="40dp"
++                        android:layout_marginTop="20dp"
++                        android:layout_gravity="center"
++                        app:tint="@color/grey"
++                        android:src="@drawable/ic_route" />
++
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:padding="8dp"
++                        android:layout_marginTop="20dp"
++                        android:background="@color/darkgreen"
++                        android:text="Yolculuk"
++                        android:textSize="18sp"
++                        android:textAlignment="center"
++                        android:textColor="#ffffff"
++                        android:gravity="center_horizontal" />
++
++                </LinearLayout>
++            </LinearLayout>
++
++
++            <TextView
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:padding="8dp"
++                android:layout_marginTop="15dp"
++                android:text="Geçmiş Yolculuk"
++                android:textSize="18sp"
++                android:textColor="@color/grey"
++                android:gravity="center_horizontal" />
++
++            <View
++                android:layout_marginBottom="20dp"
++                android:layout_marginTop="10dp"
++                android:layout_width="match_parent"
++                android:layout_height="1dp"
++                android:background="@android:color/darker_gray"/>
++
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:orientation="horizontal"
++                android:weightSum="3"
++                android:baselineAligned="false">
++                <LinearLayout
++                    android:id="@+id/car_button"
++                    android:layout_width="0dp"
++                    android:layout_height="120dp"
++                    android:layout_weight="1"
++                    android:layout_margin="2dp"
++                    android:orientation="vertical"
++                    android:background="@color/lightgreen"
++                    >
++                    <ImageView
++                        android:layout_width="40dp"
++                        android:layout_height="40dp"
++                        android:layout_marginTop="20dp"
++                        android:layout_gravity="center"
++                        app:tint="@color/grey"
++                        android:src="@drawable/ic_car" />
++
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:padding="8dp"
++                        android:layout_marginTop="20dp"
++                        android:background="@color/darkgreen"
++                        android:text="@string/araba"
++                        android:textSize="18sp"
++                        android:textAlignment="center"
++                        android:textColor="#ffffff"
++                        android:gravity="center_horizontal" />
++
++                </LinearLayout>
++
++                <LinearLayout
++                    android:id="@+id/bus_button"
++                    android:layout_width="0dp"
++                    android:layout_height="120dp"
++                    android:layout_weight="1"
++                    android:layout_margin="2dp"
++                    android:orientation="vertical"
++                    android:background="@color/lightgreen"
++                    >
++                    <ImageView
++                        android:layout_width="40dp"
++                        android:layout_height="40dp"
++                        android:layout_marginTop="20dp"
++                        android:layout_gravity="center"
++                        app:tint="@color/grey"
++                        android:src="@drawable/ic_bus"/>
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:padding="8dp"
++                        android:layout_marginTop="20dp"
++                        android:background="@color/darkgreen"
++                        android:text="@string/otobus"
++                        android:textSize="18sp"
++                        android:textColor="#ffffff"
++                        android:gravity="center_horizontal" />
++
++                </LinearLayout>
++
++                <LinearLayout
++                    android:id="@+id/bicycle_button"
++                    android:layout_width="0dp"
++                    android:layout_height="120dp"
++                    android:layout_weight="1"
++                    android:layout_margin="2dp"
++                    android:orientation="vertical"
++                    android:background="@color/lightgreen"
++                    >
++                    <ImageView
++                        android:layout_width="40dp"
++                        android:layout_height="40dp"
++                        android:layout_marginTop="20dp"
++                        android:layout_gravity="center"
++                        android:src="@drawable/ic_bike"
++                        app:tint="@color/grey" />
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:padding="8dp"
++                        android:layout_marginTop="20dp"
++                        android:background="@color/darkgreen"
++                        android:text="@string/bisiklet"
++                        android:textSize="18sp"
++                        android:textColor="#ffffff"
++                        android:gravity="center_horizontal" />
++
++                </LinearLayout>
++
++
++            </LinearLayout>
++
++
++
++            <TextView
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:padding="8dp"
++                android:layout_marginTop="15dp"
++                android:text="Utility"
++                android:textSize="18sp"
++                android:textColor="#707070"
++                android:gravity="center_horizontal" />
++
++            <View
++                android:layout_marginBottom="10dp"
++                android:layout_marginTop="10dp"
++                android:layout_width="match_parent"
++                android:layout_height="1dp"
++                android:background="@android:color/darker_gray"/>
++
++            <!-- Second Row-->
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:orientation="horizontal"
++                android:weightSum="2"
++                android:baselineAligned="false">
++                <LinearLayout
++                    android:id="@+id/electricity_button"
++                    android:layout_width="0dp"
++                    android:layout_height="120dp"
++                    android:layout_weight="1"
++                    android:layout_margin="2dp"
++                    android:orientation="vertical"
++                    android:background="@color/lightgreen"
++                    >
++                    <ImageView
++                        android:layout_width="40dp"
++                        android:layout_height="40dp"
++                        android:layout_marginTop="20dp"
++                        android:layout_gravity="center"
++                        app:tint="@color/grey"
++                        android:src="@drawable/ic_electricity"/>
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:padding="8dp"
++                        android:layout_marginTop="20dp"
++                        android:background="@color/darkgreen"
++                        android:text="@string/elektrik"
++                        android:textSize="18sp"
++                        android:textColor="#ffffff"
++                        android:gravity="center_horizontal" />
++
++                </LinearLayout>
++
++                <LinearLayout
++                    android:id="@+id/gas_button"
++                    android:layout_width="0dp"
++                    android:layout_height="120dp"
++                    android:layout_weight="1"
++                    android:layout_margin="2dp"
++                    android:orientation="vertical"
++                    android:background="@color/lightgreen"
++                    >
++                    <ImageView
++                        android:layout_width="40dp"
++                        android:layout_height="40dp"
++                        android:layout_marginTop="20dp"
++                        android:layout_gravity="center"
++                        app:tint="@color/grey"
++                        android:src="@drawable/ic_gas"/>
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:padding="8dp"
++                        android:layout_marginTop="20dp"
++                        android:background="@color/darkgreen"
++                        android:text="@string/dogalgaz"
++                        android:textSize="18sp"
++                        android:textColor="#ffffff"
++                        android:gravity="center_horizontal" />
++
++                </LinearLayout>
++
++
++
++            </LinearLayout>
++            <!-- End Second Row-->
++
++
++        </LinearLayout>
++
++    </ScrollView>
++
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_add_bus_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carbonfootprintcalculation.add_bus_menu\">\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"bus\"\r\n        android:gravity=\"center\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_bus_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/layout/activity_add_bus_menu.xml	(date 1614778084334)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ui.carbonfootprintcalculation.add_bus_menu">
++    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_bus_menu">
+ 
+     <TextView
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/activity_add_gas_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carbonfootprintcalculation.add_gas_menu\">\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"gas\"\r\n        android:gravity=\"center\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_gas_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/layout/activity_add_gas_menu.xml	(date 1614778084326)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ui.carbonfootprintcalculation.add_gas_menu">
++    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_gas_menu">
+ 
+     <TextView
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/activity_add_bike_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carbonfootprintcalculation.add_bike_menu\">\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"bike\"\r\n        android:gravity=\"center\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_bike_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/layout/activity_add_bike_menu.xml	(date 1614778084150)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ui.carbonfootprintcalculation.add_bike_menu">
++    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_bike_menu">
+ 
+     <TextView
+         android:layout_width="match_parent"
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.bil496\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <activity android:name=\".ui.carbonfootprintcalculation.add_electricity_menu\"></activity>\r\n        <activity android:name=\".ui.carbonfootprintcalculation.add_gas_menu\" />\r\n        <activity android:name=\".ui.carbonfootprintcalculation.add_bus_menu\" />\r\n        <activity android:name=\".ui.carbonfootprintcalculation.add_bike_menu\" />\r\n        <activity android:name=\".ui.carbonfootprintcalculation.add_active_journey_menu\" />\r\n        <activity android:name=\".ui.carbonfootprintcalculation.add_car_menu\" />\r\n        <activity android:name=\".LoginActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\".ProfileActivity\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:label=\"@string/app_name\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/AndroidManifest.xml	(date 1614778084319)
+@@ -11,12 +11,12 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-        <activity android:name=".ui.carbonfootprintcalculation.add_electricity_menu"></activity>
+-        <activity android:name=".ui.carbonfootprintcalculation.add_gas_menu" />
+-        <activity android:name=".ui.carbonfootprintcalculation.add_bus_menu" />
+-        <activity android:name=".ui.carbonfootprintcalculation.add_bike_menu" />
+-        <activity android:name=".ui.carbonfootprintcalculation.add_active_journey_menu" />
+-        <activity android:name=".ui.carbonfootprintcalculation.add_car_menu" />
++        <activity android:name=".ui.carboncalculation.carbonfootprintcalculation.add_electricity_menu"></activity>
++        <activity android:name=".ui.carboncalculation.carbonfootprintcalculation.add_gas_menu" />
++        <activity android:name=".ui.carboncalculation.carbonfootprintcalculation.add_bus_menu" />
++        <activity android:name=".ui.carboncalculation.carbonfootprintcalculation.add_bike_menu" />
++        <activity android:name=".ui.carboncalculation.carbonfootprintcalculation.add_active_journey_menu" />
++        <activity android:name=".ui.carboncalculation.carbonfootprintcalculation.add_car_menu" />
+         <activity android:name=".LoginActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+Index: app/src/main/res/layout/activity_add_electricity_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carbonfootprintcalculation.add_electricity_menu\">\r\n\r\n\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"electricity\"\r\n        android:gravity=\"center\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_electricity_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/layout/activity_add_electricity_menu.xml	(date 1614778084134)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ui.carbonfootprintcalculation.add_electricity_menu">
++    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_electricity_menu">
+ 
+ 
+ 
+Index: app/src/main/res/layout/activity_add_active_journey_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carbonfootprintcalculation.add_active_journey_menu\">\r\n\r\n\r\n\r\n\r\n\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/add_utility_toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"?attr/actionBarSize\"\r\n        android:background=\"@color/colorPrimary\"\r\n        android:elevation=\"4dp\"\r\n        app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\">\r\n\r\n\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/main_toolbar_layout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/add_utility_toolbar_title\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textAllCaps=\"true\"\r\n                android:textSize=\"16sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n        </LinearLayout>\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:text=\"active journey\"\r\n            android:gravity=\"center\"\r\n            android:textColor=\"@color/lightgreen\"/>\r\n    </androidx.appcompat.widget.Toolbar>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_active_journey_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/layout/activity_add_active_journey_menu.xml	(date 1614778084311)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ui.carbonfootprintcalculation.add_active_journey_menu">
++    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_active_journey_menu">
+ 
+ 
+ 
+Index: app/src/main/res/layout/activity_add_car_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.carbonfootprintcalculation.add_car_menu\">\r\n\r\n\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"car\"\r\n        android:gravity=\"center\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_car_menu.xml	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/res/layout/activity_add_car_menu.xml	(date 1614778084244)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ui.carbonfootprintcalculation.add_car_menu">
++    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_car_menu">
+ 
+ 
+ 
+Index: app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_bike_menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carbonfootprintcalculation;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.example.bil496.R;\r\npublic class add_bike_menu extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_bike_menu);\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_bike_menu.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/carbonfootprintcalculation/add_bike_menu.java	(date 1614778084126)
+@@ -1,4 +1,4 @@
+-package com.example.bil496.ui.carbonfootprintcalculation;
++package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+Index: app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_bus_menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carbonfootprintcalculation;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.example.bil496.R;\r\n\r\npublic class add_bus_menu extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_bus_menu);\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_bus_menu.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/carbonfootprintcalculation/add_bus_menu.java	(date 1614778084046)
+@@ -1,4 +1,4 @@
+-package com.example.bil496.ui.carbonfootprintcalculation;
++package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+Index: app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_gas_menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carbonfootprintcalculation;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.example.bil496.R;\r\n\r\npublic class add_gas_menu extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_gas_menu);\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_gas_menu.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/carbonfootprintcalculation/add_gas_menu.java	(date 1614778084080)
+@@ -1,4 +1,4 @@
+-package com.example.bil496.ui.carbonfootprintcalculation;
++package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+Index: app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_car_menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carbonfootprintcalculation;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.example.bil496.R;\r\n\r\npublic class add_car_menu extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_car_menu);\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_car_menu.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/carbonfootprintcalculation/add_car_menu.java	(date 1614778084238)
+@@ -1,4 +1,4 @@
+-package com.example.bil496.ui.carbonfootprintcalculation;
++package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+Index: app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_electricity_menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.ui.carbonfootprintcalculation;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.example.bil496.R;\r\n\r\npublic class add_electricity_menu extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_electricity_menu);\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/example/bil496/ui/carbonfootprintcalculation/add_electricity_menu.java	(revision 8f2be116875c51fea2967570920f1a27c93a7754)
++++ app/src/main/java/com/example/bil496/ui/carboncalculation/carbonfootprintcalculation/add_electricity_menu.java	(date 1614778084303)
+@@ -1,4 +1,4 @@
+-package com.example.bil496.ui.carbonfootprintcalculation;
++package com.example.bil496.ui.carboncalculation.carbonfootprintcalculation;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
