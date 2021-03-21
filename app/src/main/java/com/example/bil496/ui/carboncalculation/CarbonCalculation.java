@@ -10,29 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.bil496.R;
-import com.example.bil496.ui.carboncalculation.add_menus.add_active_journey_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_car_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_flight_menu;
+import com.example.bil496.ui.carboncalculation.add_menus.add_gas_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_motorbike_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.add_publictransport_menu;
 import com.example.bil496.ui.carboncalculation.add_menus.car_data_listener;
 import com.example.bil496.ui.carboncalculation.add_menus.flight_data_listener;
+import com.example.bil496.ui.carboncalculation.add_menus.gas_data_listener;
 import com.example.bil496.ui.carboncalculation.add_menus.motorbike_data_listener;
 import com.example.bil496.ui.carboncalculation.add_menus.publictransport_data_listener;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import javax.xml.datatype.Duration;
 
 public class CarbonCalculation extends Fragment{
 
@@ -40,6 +36,8 @@ public class CarbonCalculation extends Fragment{
     public static flight_data_listener flight_data = new flight_data_listener(0);
     public static motorbike_data_listener motorbike_data = new motorbike_data_listener(0);
     public static publictransport_data_listener publictransport_data = new publictransport_data_listener(0);
+    public static gas_data_listener gas_data = new gas_data_listener(0);
+
 
     private LinearLayout activejourney;
     private LinearLayout flight;
@@ -80,6 +78,7 @@ public class CarbonCalculation extends Fragment{
         yValues.add(new PieEntry(car_data.getCar_data()+25.5f, "Araba"));
         yValues.add(new PieEntry(motorbike_data.getMotorbike_data()+19f, "Motorsiklet"));
         yValues.add(new PieEntry(publictransport_data.getPublictransport_data()+7.9f, "Toplu Taşıma"));
+        yValues.add(new PieEntry(gas_data.getGas_data()+9f, "Doğal gaz"));
 
       pieChart.animate();
         dataSet = new PieDataSet(yValues,"Countries");
@@ -155,7 +154,7 @@ public class CarbonCalculation extends Fragment{
             @Override
             public void onClick(View v) {
                 add_motorbike_menu dialog = new add_motorbike_menu();
-                dialog.show(getFragmentManager(), "add_motorbike?menu");
+                dialog.show(getFragmentManager(), "add_motorbike_menu");
                 System.out.println(car_data.getCar_data());
             }
         });
@@ -177,21 +176,31 @@ public class CarbonCalculation extends Fragment{
             }
         });
 
-       /* electricity.setOnClickListener(new View.OnClickListener() {
+       /*electricity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), add_electricity_menu.class));
             }
         });
+*/
+       gas_data.setListener(new gas_data_listener.ChangeListener() {
+           @Override
+           public void onChange() {
+               yValues.set(4, new PieEntry(gas_data.getGas_data(),"Doğal Gaz"));
+               pieChart.notifyDataSetChanged();
+               pieChart.invalidate();
+           }
+       });
 
         gas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), add_gas_menu.class));
+                add_gas_menu dialog = new add_gas_menu();
+                dialog.show(getFragmentManager(), "add_gas_menu");
             }
         });
 
-*/
+
 
 
     }
