@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:padding = "16dp"
     android:id="@+id/donation_dialog"
-    android:background="@color/darkgreen"
+    android:background="@color/white"
     >
 
 

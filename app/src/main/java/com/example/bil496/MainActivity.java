@@ -14,6 +14,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bil496.foundations.Foundation;
+import com.example.bil496.foundations.WebScrapingGreenPeace;
+import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
 import com.example.bil496.ui.foundations.FoundationPageFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
