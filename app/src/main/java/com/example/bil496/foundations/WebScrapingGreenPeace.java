@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class WebScrapingGreenPeace {
     static String baseUrl = "https://www.greenpeace.org/turkey";
-    static Foundation foundation = new Foundation("Green Peace",baseUrl);
+    static Foundation foundation = new Foundation("Greenpeace",baseUrl);
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static void scrape () {
         new Thread(new Runnable() {
@@ -40,7 +40,7 @@ public class WebScrapingGreenPeace {
                     }
                     System.out.println("**Scraping is done");
 
-                    DatabaseReference dbRef = database.getReference("Foundations/Green Peace");
+                    DatabaseReference dbRef = database.getReference("Foundations/Greenpeace");
                     dbRef.setValue(foundation);
 
 

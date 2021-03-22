@@ -13,7 +13,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bil496.foundations.DonationDialog;
 import com.example.bil496.foundations.Foundation;
+import com.example.bil496.foundations.FoundationData;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
@@ -24,8 +26,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+    static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
     @Override
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         greenPeaceScraper.scrape();
         */
 
+//        FoundationData.totalDonation[0] = dbRef.get().toString()
     }
 
 

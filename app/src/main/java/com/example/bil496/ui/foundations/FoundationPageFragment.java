@@ -47,7 +47,7 @@ public class FoundationPageFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                DonationDialog donationDialog = new DonationDialog();
+                DonationDialog donationDialog = new DonationDialog(description.substring(0,description.indexOf(" ")));
                 AppCompatActivity activity = (AppCompatActivity)view.getContext();
 
                 donationDialog.show(activity.getSupportFragmentManager(),"dialog");
