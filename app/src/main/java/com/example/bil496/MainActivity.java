@@ -1,46 +1,36 @@
 package com.example.bil496;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bil496.foundations.DonationDialog;
 import com.example.bil496.foundations.Foundation;
-import com.example.bil496.foundations.FoundationNewAdapter;
-import com.example.bil496.foundations.FoundationNews;
+import com.example.bil496.foundations.FoundationData;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
+import com.example.bil496.ui.foundations.FoundationPageFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-import static com.example.bil496.R.layout.fragment_dashboard;
 
 public class MainActivity extends AppCompatActivity {
+    static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
     @Override
@@ -67,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         greenPeaceScraper.scrape();
         */
 
+//        FoundationData.totalDonation[0] = dbRef.get().toString()
     }
 
 
@@ -91,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         /*FoundationNewAdapter foundationNewAdapter = new FoundationNewAdapter(title, content, MainActivity.this);
         View root = inflater.inflate(fragment_dashboard, container, false);
         listlistView = root.findViewById(R.id.lv_foundationNews);*/
-        NewsFragment newsFragment = new NewsFragment(title, content);
+        NewsFragment newsFragment = new NewsFragment(title, content); //yeni acacagin fragment
         MainActivity.this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_dashboard_container, newsFragment, "findThisFragment")
                 .addToBackStack(null)
