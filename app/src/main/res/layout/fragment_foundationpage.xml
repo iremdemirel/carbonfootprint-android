@@ -11,36 +11,36 @@
 
     <RelativeLayout
         android:id="@+id/rellay1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="151dp"
         android:background="@drawable/grad"
         android:paddingBottom="20dp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="0dp">
 
         <RelativeLayout
             android:id="@+id/rellay2"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/foundation_logo"
-                android:layout_width="127dp"
-                android:layout_height="125dp"
+                android:layout_width="80dp"
+                android:layout_height="115dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="270dp"
-                android:layout_marginRight="270dp"
-                android:layout_marginBottom="38dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="302dp"
+                android:layout_marginRight="302dp"
+                android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle"
                 android:padding="3dp"
@@ -48,16 +48,16 @@
 
             <TextView
                 android:id="@+id/foundation_page_description"
-                android:layout_width="164dp"
-                android:layout_height="82dp"
+                android:layout_width="146dp"
+                android:layout_height="94dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="25dp"
-                android:layout_marginEnd="97dp"
-                android:layout_marginRight="97dp"
-                android:layout_marginBottom="45dp"
+                android:layout_marginEnd="143dp"
+                android:layout_marginRight="143dp"
+                android:layout_marginBottom="12dp"
                 android:fontFamily="sans-serif-light"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -76,15 +76,15 @@
             <Button
                 android:id="@+id/donation_button"
                 android:layout_width="32dp"
-                android:layout_height="36dp"
+                android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="38dp"
-                android:layout_marginRight="38dp"
-                android:layout_marginBottom="91dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="78dp"
+                android:layout_marginRight="78dp"
+                android:layout_marginBottom="87dp"
                 android:background="@drawable/ic_charity" />
 
             <TextView
@@ -94,30 +94,48 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginBottom="73dp"
+                android:layout_marginEnd="78dp"
+                android:layout_marginRight="78dp"
+                android:layout_marginBottom="68dp"
                 android:background="@drawable/rounded_corner"
                 android:text=" Bağış Miktarı: "
                 android:textColor="@color/darkgreen"
                 android:textSize="10sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/donation_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="13dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginBottom="71dp"
-                android:text="0"
+                android:layout_marginEnd="58dp"
+                android:layout_marginRight="58dp"
+                android:layout_marginBottom="66dp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
         </RelativeLayout>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_dashboard_container">
+
+
+        <ListView
+            android:id="@+id/lv_foundationNews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="152dp"
+            android:layout_marginBottom="55dp"
+            android:background="@color/design_default_color_secondary_variant"
+            tools:ignore="MissingConstraints">
+
+
+        </ListView>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

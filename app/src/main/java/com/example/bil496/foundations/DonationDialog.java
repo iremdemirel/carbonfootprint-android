@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.example.bil496.R;
 import com.example.bil496.ui.dashboard.Callback;
+import com.example.bil496.ui.foundations.FoundationPageFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,6 +83,7 @@ public class DonationDialog extends AppCompatDialogFragment {
                     if (flagDonation){
                         int currDonation = Integer.parseInt(totalD.toString()) + donation;
                         dbRefQuoteRequestList.setValue(currDonation);
+                        FoundationPageFragment.setDonationText(currDonation);
                     }
                     flagDonation = false;
                 }
