@@ -3,6 +3,7 @@ package com.example.bil496;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,12 +26,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bil496.forFirebase.Users;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
+import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +43,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     TextView bio;
@@ -71,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             insertUsertoDatabase();
+        } else {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
         currentUserID = FirebaseAuth.getInstance().getUid();
@@ -87,10 +96,11 @@ public class MainActivity extends AppCompatActivity {
         final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         reference.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if ((dataSnapshot.child("email").exists())) {
-                    Toast.makeText(MainActivity.this, "Veritabanına kayıtlı", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Veritabanına kayıtlı", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseReference ref = reference.child("Users").child(currentUserID);
 
@@ -100,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
                     users.setName(user.getDisplayName());
                     users.setEmail(user.getEmail());
-                    users.setPhotoURL(user.getPhotoUrl().toString());
+                    users.setPhotoURL(Objects.requireNonNull(user.getPhotoUrl()).toString());
                     users.setBio("");
 
                     ref.setValue(users);
@@ -109,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this, "Veritabanına kaydedilmedi", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Veritabanına kaydedilmedi", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -130,6 +140,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Logout başarısız", Toast.LENGTH_SHORT).show();
             }
         });
+
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(view.getContext(), LoginActivity.class));
+                    }
+                });
     }
 
     public void editBio(final View view) {
@@ -142,11 +160,12 @@ public class MainActivity extends AppCompatActivity {
         dialog.setView(editbio);
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Kaydet", new DialogInterface.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 bio.setText(editbio.getText());
 
-                final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                final String currentUserID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
                 reference.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -156,18 +175,18 @@ public class MainActivity extends AppCompatActivity {
                             reference.child("Users").child(currentUserID).child("bio").setValue(editbio.getText().toString()).addOnSuccessListener(new OnSuccessListener() {
                                 @Override
                                 public void onSuccess(Object o) {
-                                    Toast.makeText(MainActivity.this, "Veritabanına bio kaydedildi", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(MainActivity.this, "Veritabanına bio kaydedildi", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                         } else {
-                            Toast.makeText(MainActivity.this, "Veritabanında kullanıcı kayıtlı degil", Toast.LENGTH_SHORT).show();
+                            //t.makeText(MainActivity.this, "Veritabanında kullanıcı kayıtlı degil", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(MainActivity.this, "Veritabanına bio kaydedilmedi", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Veritabanına bio kaydedilmedi", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -180,8 +199,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Opens a popup to add friend
     public void addFriendPopup(final View view) {
-
-        Toast.makeText(this, "in add friend popup main", Toast.LENGTH_SHORT).show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -215,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         final String key = getRef(position).getKey();
-                        Toast.makeText(MainActivity.this, "key:" + key, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "key:" + key, Toast.LENGTH_SHORT).show();
 
 
                         reference.child("Users").child(currentUserID).child("friends").addValueEventListener(new ValueEventListener() {
@@ -228,14 +245,14 @@ public class MainActivity extends AppCompatActivity {
 
                                     } else {
                                         reference.child("Users").child(currentUserID).child("friends").child(key).setValue(model);
-                                        Toast.makeText(MainActivity.this, "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(MainActivity.this, "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Toast.makeText(MainActivity.this, "Veritabanına arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "Arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
                             }
                         });
                         friendPopup.dismiss();
@@ -256,5 +273,6 @@ public class MainActivity extends AppCompatActivity {
         friendPopup.show();
 
     }
+
 }
 
