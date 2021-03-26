@@ -3,6 +3,7 @@ package com.example.bil496.ui.home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,6 +41,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
@@ -59,6 +63,7 @@ public class HomeFragment extends Fragment {
     private String currentUserID;
     private AlertDialog friendPopup;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -79,6 +84,7 @@ public class HomeFragment extends Fragment {
     }
 
     //initialize profile information of the user
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initProfileInfo() {
 
         mAuth = FirebaseAuth.getInstance();
@@ -87,7 +93,9 @@ public class HomeFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
+
         if (user != null) {
+
             Glide.with(this.getActivity())
                     .load(user.getPhotoUrl())
                     .into(imageView);
@@ -96,12 +104,13 @@ public class HomeFragment extends Fragment {
             email.setText(user.getEmail());
 
             reference.child("Users").child(mAuth.getCurrentUser().getUid()).child("bio").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(getContext(), "bio yok", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "bio yok", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (task.getResult().getValue() == null) {
+                        if (Objects.requireNonNull(task.getResult()).getValue() == null) {
                             bio.setText("SET YOUR BIO");
                         } else {
                             bio.setText(String.valueOf(task.getResult().getValue()));
@@ -125,17 +134,19 @@ public class HomeFragment extends Fragment {
                 }
 
                 @Override
-                protected void onBindViewHolder(@NonNull FriendViewHolder holder, int position, @NonNull Users model) {
+                protected void onBindViewHolder(@NonNull final FriendViewHolder holder, final int position, @NonNull Users model) {
                     holder.friendName.setText(model.getName());
                     holder.friendEmail.setText(model.getEmail());
 
                 }
+
+
             };
 
             adapter.startListening();
             recyclerView.setAdapter(adapter);
 
-            RecyclerView.ItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
+            RecyclerView.ItemDecoration divider = new DividerItemDecoration(Objects.requireNonNull(this.getActivity()), DividerItemDecoration.VERTICAL);
             recyclerView.addItemDecoration(divider);
 
         }
@@ -143,10 +154,11 @@ public class HomeFragment extends Fragment {
 
 
     //logout
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void logout(final android.view.View view) {
         FirebaseAuth.getInstance().signOut();
 
-        GoogleSignIn.getClient(this.getActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
+        GoogleSignIn.getClient(Objects.requireNonNull(this.getActivity()), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
                 .signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -182,8 +194,6 @@ public class HomeFragment extends Fragment {
 
     //add friend dialog
     public void addFriendPopup(final View view) {
-
-        Toast.makeText(getContext(), "in add friend popup", Toast.LENGTH_SHORT).show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -232,13 +242,13 @@ public class HomeFragment extends Fragment {
                                 } else {
 
                                     reference.child("Users").child(currentUserID).child("friends").push().setValue(model);
-                                    Toast.makeText(getContext(), "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Toast.makeText(getContext(), "Veritabanına arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "Veritabanına arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
