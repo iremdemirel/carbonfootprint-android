@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".ui.home.HomeFragment">
+
 
     <TextView
         android:id="@+id/bio"
@@ -80,10 +82,12 @@
         android:text="@string/LOGOUT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.786"
+        android:background="@color/darkgreen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio"
-        app:layout_constraintVertical_bias="0.093" />
+        android:textColor="#ffffff"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="0.161" />
 
     <Button
         android:id="@+id/editBio"
@@ -96,15 +100,17 @@
         android:text="@string/bio_d_zenle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/logout"
-        app:layout_constraintHorizontal_bias="0.496"
+        android:background="@color/darkgreen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio"
-        app:layout_constraintVertical_bias="0.452" />
+        android:textColor="#ffffff"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.78" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friendrecyclerView"
-        android:layout_width="406dp"
-        android:layout_height="304dp"
+        android:layout_width="403dp"
+        android:layout_height="262dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -117,12 +123,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/arkadaslar"
+        android:textColor="@color/darkgreen"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/friendrecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editBio"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/toAddFriendButton"
@@ -132,11 +140,14 @@
         android:focusable="true"
         android:onClick="addFriendPopup"
         android:text="@string/arkadasekle"
-        app:layout_constraintBottom_toBottomOf="@+id/friendrecyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/friendrecyclerView"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="@+id/friendrecyclerView"
-        app:layout_constraintTop_toTopOf="@+id/friendrecyclerView"
-        app:layout_constraintVertical_bias="0.703" />
+        android:background="@color/darkgreen"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/friendrecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/logout"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toEndOf="@+id/editBio"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintVertical_bias="0.632" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
