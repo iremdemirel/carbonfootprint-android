@@ -19,4 +19,10 @@
     <string name="isim">isim</string>
     <string name="email">email</string>
     <string name="iptal">İPTAL</string>
+
+
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_app_id">4238471716163226</string>
+    <string name="fb_login_protocol_scheme">fb4238471716163226</string>
+
 </resources>
