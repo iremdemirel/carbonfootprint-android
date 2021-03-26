@@ -274,5 +274,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void friendAddCancel(View view) {
+        friendPopup.dismiss();
+    }
 }
 
