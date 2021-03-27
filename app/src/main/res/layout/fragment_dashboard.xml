@@ -7,13 +7,31 @@
     android:fitsSystemWindows="true"
     android:id="@+id/fragment_dashboard_container"
     tools:context=".ui.dashboard.DashboardFragment">
+<!--
+    <EditText   android:layout_weight="1"
+        android:id="@+id/etSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="" >
 
+        <requestFocus />
+    </EditText>
+-->
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:padding="2dp"
+        android:queryHint="Search...." />
 
     <ListView
         android:id="@+id/lv_foundationNews"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginBottom="55dp">
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="40dp">
 
     </ListView>
 

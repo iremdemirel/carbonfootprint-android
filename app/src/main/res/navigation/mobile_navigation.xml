@@ -31,7 +31,14 @@
 
     <fragment
         android:id="@+id/navigation_foundations"
-        android:name="com.example.bil496.ui.foundations.FoundationFragment"
-        android:label="Foundations"
-        tools:layout="@layout/fragment_foundation" />
+        android:name="com.example.bil496.ui.game.GameFragment"
+        android:label="neWorld"
+        tools:layout="@layout/fragment_game" />
+<!--
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.example.bil496.ui.game.GameFragment"
+        android:label="neWorld"
+        tools:layout="@layout/fragment_game" />
+-->
 </navigation>

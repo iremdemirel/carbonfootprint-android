@@ -2,11 +2,15 @@ package com.example.bil496.ui.dashboard;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,22 +38,42 @@ import java.util.List;
 import static com.example.bil496.R.*;
 import static com.example.bil496.R.layout.*;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements SearchView.OnQueryTextListener{
     ///final ArrayList<String> newsTitle = new ArrayList<>();
     //final ArrayList<String> newsContent = new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
     DatabaseReference ref;
     Context cont;
     private ListView listView;
+    private EditText etSearch;
     private View root;
     private FoundationNewsListAdapter listAdapter;
-
+    private SearchView searchView;
     public DashboardFragment() {
     }
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        searchView.setOnQueryTextListener(this);
+        /*etSearch.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Call back the Adapter with current character to Filter
+                listAdapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+            }
+
+        });
+*/
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -58,6 +82,8 @@ public class DashboardFragment extends Fragment {
         cont = getContext();
         root = inflater.inflate(fragment_dashboard, container, false);
         listView = root.findViewById(id.lv_foundationNews);
+        searchView = root.findViewById(id.search_view);
+        //etSearch = (EditText) root.findViewById(R.id.etSearch);
         listAdapter = new FoundationNewsListAdapter(inflater, getActivity());
 
         readData(new Callback(){
@@ -90,13 +116,27 @@ public class DashboardFragment extends Fragment {
                         newsTitle.add(title);
                         newsContent.add(content);
                     }
-
                 }
                 String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
                 String[] contentarr = Arrays.copyOf(newsContent.toArray(), newsContent.size(), String[].class);
                 listAdapter.setTitles(titlearr);
                 listAdapter.setContents(contentarr);
+                listAdapter.setDisplayedTitles(titlearr);
+                listAdapter.setDisplayedContents(contentarr);
                 listView.setAdapter(listAdapter);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        listAdapter.getFilter().filter(s);
+                        listAdapter.notifyDataSetChanged();
+                        return true;
+                    }
+                });
                 listAdapter.notifyDataSetChanged();
             }
 
@@ -107,4 +147,14 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        listAdapter.getFilter().filter(s);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return false;
+    }
 }

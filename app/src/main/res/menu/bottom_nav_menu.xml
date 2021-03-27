@@ -24,5 +24,10 @@
         android:id="@+id/navigation_foundations"
         android:icon="@drawable/ic_foundations"
         android:title="@string/title_foundations" />
-
+   <!--
+    <item
+        android:id="@+id/navigation_game"
+        android:icon="@drawable/ic_foundations"
+        android:title="@string/neWorld" />
+    -->
 </menu>

@@ -8,14 +8,6 @@
     android:onClick="logout"
     android:layout_gravity="center">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="neWorld"
-        android:id="@+id/neWorld_button"
-        tools:ignore="MissingConstraints"
-        android:gravity="center"/>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
