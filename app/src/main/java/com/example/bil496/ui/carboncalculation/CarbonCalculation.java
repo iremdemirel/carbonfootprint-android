@@ -107,6 +107,7 @@ public class CarbonCalculation extends Fragment{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 car_data.setCar_data(snapshot.getValue(Float.class));
+
             }
 
             @Override
