@@ -1,5 +1,8 @@
 package com.example.bil496.foundations;
 
+import com.example.bil496.ui.dashboard.Callback;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -15,6 +18,8 @@ public class WebScrapingTema {
     static String baseUrl = "https://www.tema.org.tr";
     static Foundation foundation = new Foundation("TEMA",baseUrl);
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static String lastTitleInDb = "";
+
     public static void scrape () {
         new Thread(new Runnable() {
             @Override
@@ -27,18 +32,36 @@ public class WebScrapingTema {
                         String newsUrl = row.attributes().get("href");
                         Document news = Jsoup.connect(baseUrl + newsUrl).get();
                         String newsTitle = news.select("h1.title.font").text();
+                        readData(new Callback(){
+                            @Override
+                            public void onCallback(String title, String content) {
+
+                            }
+                        });
+                        readData(new Callback(){
+                            @Override
+                            public void onCallback(String title, String content) {
+
+                            }
+                        });
+                        if(newsTitle.equals(lastTitleInDb)){
+                            System.out.println("** Scraping is skipping.");
+                            break;
+                        }
+
                         System.out.println("****Scraping: " + newsTitle);
 
                         Elements text = news.select("div.font");
                         String content = "";
                         for (Element e : text.get(0).getAllElements()){
                             if(e.text().length()>15){ //if text length is less then 15, skip it.
-                                                        // It is probably title or just one sentence.
+                                // It is probably title or just one sentence.
                                 content += e.text() +" ";
                             }
                         }
                         FoundationNews newsObj = new FoundationNews(newsTitle, content, new Date());
                         foundation.addNews(newsObj);
+
                     }
                     System.out.println("**Scraping is done");
 
@@ -56,6 +79,28 @@ public class WebScrapingTema {
                 }
             }
         }).start();
+
+
+    }
+    public static void readData(final Callback callback){
+
+        DatabaseReference dbRefQuoteRequestList = database.getReference("Foundations").child("Tema")
+                .child("bulletin");
+
+        dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    lastTitleInDb = (String) postSnapshot.child("title").getValue();
+                    break;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
     }

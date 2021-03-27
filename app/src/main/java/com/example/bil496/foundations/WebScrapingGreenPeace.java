@@ -2,6 +2,9 @@ package com.example.bil496.foundations;
 
 import com.example.bil496.foundations.Foundation;
 import com.example.bil496.foundations.FoundationNews;
+import com.example.bil496.ui.dashboard.Callback;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -11,12 +14,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class WebScrapingGreenPeace {
     static String baseUrl = "https://www.greenpeace.org/turkey";
     static Foundation foundation = new Foundation("Greenpeace",baseUrl);
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static String lastTitleInDb = "";
     public static void scrape () {
         new Thread(new Runnable() {
             @Override
@@ -32,11 +38,30 @@ public class WebScrapingGreenPeace {
 
                         Document newsDoc = Jsoup.connect(url).get();
                         String newsTitle = newsDoc.title().substring(0,newsDoc.title().indexOf("-")); //to remove "Greenpeace Akdeniz Turkiye" string.
-                        System.out.println("****Scraping: " + newsTitle);
-                        Elements news = newsDoc.select("div.container div.post-content div.post-content-lead article.post-details.clearfix").get(0).children();
-                        String content = news.text();
-                        FoundationNews newsObj = new FoundationNews(newsTitle, content, new Date());
-                        foundation.addNews(newsObj);
+                        readData(new Callback(){
+                            @Override
+                            public void onCallback(String title, String content) {
+
+                            }
+                        });
+                        readData(new Callback(){
+                            @Override
+                            public void onCallback(String title, String content) {
+
+                            }
+                        });
+                        if(newsTitle.equals(lastTitleInDb)){
+                            System.out.println("** Scraping is skipping.");
+                            break;
+                        }
+                        else{
+                            System.out.println("****Scraping: " + newsTitle);
+                            Elements news = newsDoc.select("div.container div.post-content div.post-content-lead article.post-details.clearfix").get(0).children();
+                            String content = news.text();
+                            FoundationNews newsObj = new FoundationNews(newsTitle, content, new Date());
+                            foundation.addNews(newsObj);
+                        }
+
                     }
                     System.out.println("**Scraping is done");
 
@@ -49,6 +74,29 @@ public class WebScrapingGreenPeace {
                 }
             }
         }).start();
+
+
+    }
+
+    public static void readData(final Callback callback){
+
+        DatabaseReference dbRefQuoteRequestList = database.getReference("Foundations").child("Greenpeace")
+                .child("bulletin");
+
+        dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    lastTitleInDb = (String) postSnapshot.child("title").getValue();
+                    break;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
