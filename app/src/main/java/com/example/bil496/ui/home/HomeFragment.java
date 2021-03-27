@@ -109,9 +109,10 @@ public class HomeFragment extends Fragment {
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {
                         //Toast.makeText(getContext(), "bio yok", Toast.LENGTH_SHORT).show();
+                        bio.setText("Bio ekleyiniz");
                     } else {
-                        if (Objects.requireNonNull(task.getResult()).getValue() == null) {
-                            bio.setText("SET YOUR BIO");
+                        if (Objects.requireNonNull(task.getResult()).getValue() == null || task.getResult().getValue().toString().equalsIgnoreCase("")) {
+                            bio.setText("Bio ekleyiniz");
                         } else {
                             bio.setText(String.valueOf(task.getResult().getValue()));
                         }
