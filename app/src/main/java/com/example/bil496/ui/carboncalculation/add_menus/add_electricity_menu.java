@@ -101,7 +101,7 @@ public class add_electricity_menu extends DialogFragment {
                 newUtility = new Utility("Electricity", billStart, billEnd, billAmount, numPeople);
                 double d = newUtility.getTotalEmission();
                 getDialog().dismiss();
-                CarbonCalculation.gas_data.setGas_data(CarbonCalculation.gas_data.getGas_data() + Float.parseFloat("" + d));
+                CarbonCalculation.electricity_data.setElectricity_data(CarbonCalculation.electricity_data.getElectricity_data() + Float.parseFloat("" + d));
 
             }
         });
