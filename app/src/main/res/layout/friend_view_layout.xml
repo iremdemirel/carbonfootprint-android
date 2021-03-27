@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/friendName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/isim"
-        android:textSize="15sp" />
+        android:text="isim"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/friendEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/email"
-        android:textSize="12sp" />
+        android:text="email"
+        android:textSize="20sp" />
 </LinearLayout>
