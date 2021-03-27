@@ -1,7 +1,5 @@
 package com.example.bil496.foundations;
 
-import com.example.bil496.foundations.Foundation;
-import com.example.bil496.foundations.FoundationNews;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -11,7 +9,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class WebScrapingTema {

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".ui.home.HomeFragment">
+
 
     <TextView
         android:id="@+id/bio"
@@ -70,35 +72,78 @@
         app:layout_constraintVertical_bias="0.065"
         tools:src="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="logout"
-        android:text="@string/LOGOUT"
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendrecyclerView"
+        android:layout_width="403dp"
+        android:layout_height="262dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.786"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.167" />
-
-    <Button
-        android:id="@+id/editBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="348dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="editBio"
-        android:text="@string/bio_d_zenle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/logout"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintVertical_bias="0.452" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/arkadaslar"
+        android:textColor="@color/darkgreen"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/friendrecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/friendrecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bio">
+
+        <Button
+            android:id="@+id/editBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/darkgreen"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="editBio"
+            android:text="@string/bio_d_zenle"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/toAddFriendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgreen"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="addFriendPopup"
+            android:text="@string/arkadasekle"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/darkgreen"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="logout"
+            android:text="@string/LOGOUT"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
