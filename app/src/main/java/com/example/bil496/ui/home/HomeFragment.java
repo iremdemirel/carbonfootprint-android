@@ -230,14 +230,14 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        String key = getRef(position).getKey();
+                        final String key = getRef(position).getKey();
 
                         reference.child("Users").child(currentUserID).child("friends").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if ((dataSnapshot.child("email").exists())) {
+                                if ((dataSnapshot.hasChild(key))) {
 
-                                    Toast.makeText(getContext(), "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
 
                                 } else {
 

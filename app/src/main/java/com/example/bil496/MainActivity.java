@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (key != null) {
                                     if ((dataSnapshot.hasChild(key))) {
 
-                                        Toast.makeText(MainActivity.this, "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(MainActivity.this, "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
 
                                     } else {
                                         reference.child("Users").child(currentUserID).child("friends").child(key).setValue(model);
