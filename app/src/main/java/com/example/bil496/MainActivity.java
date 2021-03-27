@@ -25,16 +25,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bil496.forFirebase.Users;
-import com.example.bil496.foundations.DonationDialog;
-import com.example.bil496.foundations.Foundation;
-import com.example.bil496.foundations.FoundationData;
-import com.example.bil496.foundations.WebScrapingGreenPeace;
-import com.example.bil496.foundations.WebScrapingTema;
+import com.example.bil496.ui.dashboard.NewsFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.example.bil496.ui.dashboard.NewsFragment;
-import com.example.bil496.ui.foundations.FoundationPageFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,8 +46,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -76,7 +68,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        reference = FirebaseDatabase.getInstance().getReference();
+        currentUserID = FirebaseAuth.getInstance().getUid();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            insertUsertoDatabase();
+        } else {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -86,14 +89,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        reference = FirebaseDatabase.getInstance().getReference();
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            insertUsertoDatabase();
-        } else {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
 
-        currentUserID = FirebaseAuth.getInstance().getUid();
 
         // web scraping for foundations bulletin
         /*WebScrapingTema temaScraper= new WebScrapingTema();
