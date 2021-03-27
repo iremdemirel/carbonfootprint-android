@@ -48,10 +48,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.Objects;
-
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -189,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
                     users.setEmail(user.getEmail());
                     users.setPhotoURL(Objects.requireNonNull(user.getPhotoUrl()).toString());
                     users.setBio("");
-                    users.setBlog(new ArrayList<Blog>());
 
                     ref.setValue(users);
                 }
@@ -376,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
         friendPopup = builder.create();
 
         friendPopup.show();
+
 
     }
 
