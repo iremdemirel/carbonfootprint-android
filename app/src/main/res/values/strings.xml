@@ -64,4 +64,18 @@
         <item>LargeMotorBike</item>
     </string-array>
 
+    <string name="profile_picture">profile_picture</string>
+    <string name="LOGOUT">LOGOUT</string>
+    <string name="bio_d_zenle">Bio düzenle</string>
+    <string name="arkadaslar">ARKADAŞLAR</string>
+    <string name="arkadasekle">Arkadaş ekle</string>
+    <string name="isim">isim</string>
+    <string name="email">email</string>
+    <string name="iptal">İPTAL</string>
+
+
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_app_id">4238471716163226</string>
+    <string name="fb_login_protocol_scheme">fb4238471716163226</string>
+
 </resources>
