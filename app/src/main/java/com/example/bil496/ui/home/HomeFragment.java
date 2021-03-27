@@ -196,34 +196,30 @@ public class HomeFragment extends Fragment {
     //add friend dialog
     public void addFriendPopup(final View view) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
 
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = (View) inflater.inflate(R.layout.friend_view_layout, null);
+        View dialogView = (View) inflater.inflate(R.layout.friend_dialog_layout, null);
 
         builder.setView(dialogView);
 
-        RecyclerView rv = (RecyclerView) dialogView.findViewById(R.id.friendrecyclerView);
+        RecyclerView rv = (RecyclerView) dialogView.findViewById(R.id.dialogRecycler);
+        rv.hasFixedSize();
+        rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-
-        //friendPopup = new AlertDialog.Builder(this.getActivity()).create();
-
-        //CreateView
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         posts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users"), Users.class).build();
-        adapter = new FirebaseRecyclerAdapter<Users, FriendViewHolder>(posts) {
+        adapter = new FirebaseRecyclerAdapter<Users, com.example.bil496.ui.home.FriendViewHolder>(posts) {
             @NonNull
             @Override
-            public FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public com.example.bil496.ui.home.FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_view_layout, parent, false);
-                return new FriendViewHolder(view);
+                return new com.example.bil496.ui.home.FriendViewHolder(view);
 
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull FriendViewHolder holder, final int position, @NonNull final Users model) {
+            protected void onBindViewHolder(@NonNull com.example.bil496.ui.home.FriendViewHolder holder, final int position, @NonNull final Users model) {
                 holder.friendName.setText(model.getName());
                 holder.friendEmail.setText(model.getEmail());
 
@@ -232,52 +228,46 @@ public class HomeFragment extends Fragment {
                     public void onClick(View view) {
 
                         final String key = getRef(position).getKey();
+                        //Toast.makeText(MainActivity.this, "key:" + key, Toast.LENGTH_SHORT).show();
+
 
                         reference.child("Users").child(currentUserID).child("friends").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if ((dataSnapshot.hasChild(key))) {
+                                if (key != null) {
+                                    if ((dataSnapshot.hasChild(key))) {
 
-                                    //Toast.makeText(getContext(), "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(MainActivity.this, "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
 
-                                } else {
-
-                                    reference.child("Users").child(currentUserID).child("friends").push().setValue(model);
-                                    //Toast.makeText(getContext(), "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        reference.child("Users").child(currentUserID).child("friends").child(key).setValue(model);
+                                        //Toast.makeText(MainActivity.this, "Arkadaş kaydedildi", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //Toast.makeText(getContext(), "Veritabanına arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "Arkadaş kaydedilmedi", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        friendPopup.dismiss();
                     }
                 });
 
 
             }
+
+
         };
 
         adapter.startListening();
-        // recyclerView.setAdapter(adapter);
-
         rv.setAdapter(adapter);
 
-        frienddialog = builder.create();
+        friendPopup = builder.create();
 
-        //dialog.show();
+        friendPopup.show();
 
-
-        /*RecyclerView.ItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(divider);
-
-
-        friendPopup.setView(recyclerView);
-        friendPopup.setTitle("Yeni arkadaş ekle");
-
-
-        friendPopup.show();*/
     }
 }
 

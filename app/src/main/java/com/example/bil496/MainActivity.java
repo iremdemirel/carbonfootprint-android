@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bil496.forFirebase.Blog;
+import com.example.bil496.forFirebase.BlogText;
 import com.example.bil496.forFirebase.Users;
 import com.example.bil496.ui.dashboard.NewsFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -45,6 +48,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseRecyclerAdapter<Users, FriendViewHolder> adapter;
 
     private String currentUserID;
+
+    AlertDialog addPostScreen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_foundations)
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_foundations, R.id.navigation_blog)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -124,7 +131,43 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void insertUsertoDatabase() {
+    public void initAddPostScreen(final View view) {
+
+        addPostScreen = new AlertDialog.Builder(this).create();
+
+        LinearLayout layout = new LinearLayout(MainActivity.this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText postHeader = new EditText(MainActivity.this);
+        postHeader.setHint("Başlık");
+        layout.addView(postHeader);
+
+        final EditText postDescription = new EditText(MainActivity.this);
+        postDescription.setHint("Açıklama");
+        layout.addView(postDescription);
+
+        addPostScreen.setView(layout);
+        addPostScreen.setTitle("Yeni gönderi");
+
+        addPostScreen.setButton(DialogInterface.BUTTON_POSITIVE, "Gönder", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Blog newPost = new Blog(new BlogText(postHeader.getText().toString(), postDescription.getText().toString()), new Date().toString());
+
+
+                final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                reference.child("Users").child(currentUserID).child("blog").push().setValue(newPost);
+
+            }
+        });
+
+        addPostScreen.show();
+    }
+
+    public void insertUsertoDatabase() {
         final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         reference.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
@@ -330,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
         friendPopup = builder.create();
 
         friendPopup.show();
+
 
     }
 
