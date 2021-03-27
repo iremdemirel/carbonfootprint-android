@@ -4,6 +4,7 @@ apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.example.bil496"
@@ -24,7 +25,10 @@ android {
         }
     }
 }
+repositories {
 
+    maven { url 'https://jitpack.io' }
+}
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -34,9 +38,11 @@ dependencies {
     implementation 'com.android.support:design:29.0.0'
     implementation 'com.android.support:support-v4:29.0.0'
     implementation 'com.android.support:appcompat-v7:29.0.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation files('src\\main\\java\\com\\example\\bil496\\lib\\jsoup-1.13.1.jar')  //for web scraping
 
     // Import the Firebase BoM
@@ -44,6 +50,8 @@ dependencies {
 
     // Declare the dependency for the Realtime Database library
     implementation 'com.google.firebase:firebase-database'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -85,5 +93,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
 
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 }
 apply plugin: 'com.google.gms.google-services'
