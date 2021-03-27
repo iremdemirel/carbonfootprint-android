@@ -29,6 +29,9 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -54,6 +57,9 @@ public class CarbonCalculation extends Fragment{
     private LinearLayout gas;
     private View v;
 
+    private String currentUserID;
+    DatabaseReference reference;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,7 +70,8 @@ public class CarbonCalculation extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        reference = FirebaseDatabase.getInstance().getReference();
+        currentUserID = FirebaseAuth.getInstance().getUid();
         v = getView();
         pieChart = (PieChart) v.findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
@@ -136,6 +143,9 @@ public class CarbonCalculation extends Fragment{
                 yValues.set(1,new PieEntry(car_data.getCar_data(), "Araba"));
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
+
+                reference.child("Users").child(currentUserID).child("carbonfootprint").child("car").setValue(50);
+
             }
         });
 
@@ -185,7 +195,8 @@ public class CarbonCalculation extends Fragment{
         electricity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), add_electricity_menu.class));
+                add_electricity_menu dialog = new add_electricity_menu();
+                dialog.show(getFragmentManager(), "add_electricity_menu");
             }
         });
 
