@@ -100,19 +100,29 @@ public class DashboardFragment extends Fragment implements SearchView.OnQueryTex
         firebaseDatabase = FirebaseDatabase.getInstance();
         //DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference("Foundations").child("Green Peace")
         //        .child("bulletin");
-        DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference("Foundations");
+        DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference();
         dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
                 ArrayList<String> newsTitle = new ArrayList<>();
                 ArrayList<String> newsContent = new ArrayList<>();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Foundations").getChildren()) {
 
                     for(DataSnapshot postSnapshot2: postSnapshot.child("bulletin").getChildren()){
 
                         String content = postSnapshot2.child("content").getValue(String.class);
                         String title = postSnapshot2.child("title").getValue(String.class);
+                        newsTitle.add(title);
+                        newsContent.add(content);
+                    }
+                }
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
+
+                    for(DataSnapshot postSnapshot2: postSnapshot.child("blog").getChildren()){
+
+                        String content = postSnapshot2.child("blogtext").child("text").getValue(String.class);
+                        String title = postSnapshot2.child("blogtext").child("header").getValue(String.class);
                         newsTitle.add(title);
                         newsContent.add(content);
                     }
