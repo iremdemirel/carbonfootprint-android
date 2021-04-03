@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         // Passing each menu ID as a set of Ids because each
@@ -189,6 +191,23 @@ public class MainActivity extends AppCompatActivity {
                     users.setBio("");
 
                     ref.setValue(users);
+                }
+
+                if ((dataSnapshot.child("carbon").exists())) {
+                    //Toast.makeText(MainActivity.this, "Veritabanına kayıtlı", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = reference.child("Users").child(currentUserID);
+
+                    Users users = new Users();
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("total").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("flight").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("car").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("motorbike").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("publictransport").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("gas").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("electricity").setValue(0f);
                 }
             }
 
