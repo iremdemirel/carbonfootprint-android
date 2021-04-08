@@ -23,8 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bil496.LoginActivity;
+import com.example.bil496.MainActivity;
 import com.example.bil496.R;
 import com.example.bil496.forFirebase.Users;
+import com.example.bil496.ui.dashboard.NewsFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment {
     AlertDialog dialog;
     Button editBioButton;
     DatabaseReference reference;
+    Button recycleMap;
     public static AlertDialog frienddialog;
 
 
@@ -78,6 +81,13 @@ public class HomeFragment extends Fragment {
         currentUserID = FirebaseAuth.getInstance().getUid();
 
         recyclerView = (RecyclerView) root.findViewById(R.id.friendrecyclerView);
+        recycleMap = (Button) root.findViewById(R.id.RecycleMapButton);
+        recycleMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).changeMapFrame(getLayoutInflater());
+            }
+        });
         initProfileInfo();
 
         return root;
