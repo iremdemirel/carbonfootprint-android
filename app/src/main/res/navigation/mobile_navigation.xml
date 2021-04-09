@@ -24,15 +24,21 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_blog"
-        android:name="com.example.bil496.ui.blog.BlogFragment"
-        android:label="Blog"
-        tools:layout="@layout/fragment_blog" />
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.bil496.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_foundations"
         android:name="com.example.bil496.ui.foundations.FoundationFragment"
         android:label="Foundations"
         tools:layout="@layout/fragment_foundation" />
-
+<!--
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.example.bil496.ui.game.GameFragment"
+        android:label="neWorld"
+        tools:layout="@layout/fragment_game" />
+-->
 </navigation>
