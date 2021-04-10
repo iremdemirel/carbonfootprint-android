@@ -89,8 +89,13 @@ public class FoundationNewsListAdapter extends BaseAdapter implements Filterable
         v = inflater.inflate(R.layout.list_item, null);
         holder.title = (TextView) v.findViewById(R.id.title_foundationNew);
         holder.content = (TextView) v.findViewById(R.id.content_foundationNew);
-        holder.title.setText(displayedTitles[position]);
-        holder.content.setText(displayedContents[position]);
+        if(displayedTitles == null){ //non filter
+            holder.title.setText(titles[position]);
+            holder.content.setText(contents[position]);
+        }else{
+            holder.title.setText(displayedTitles[position]);
+            holder.content.setText(displayedContents[position]);
+        }
         v.setOnClickListener(new View.OnClickListener(){
 
             @Override
