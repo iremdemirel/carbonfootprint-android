@@ -78,7 +78,11 @@ public class AfterDonationDialog extends AppCompatDialogFragment {
                 @Override
                 public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
                     Double footprint = 0.0;
-                    footprint = (Double) dataSnapshot.getValue();
+                    if(Long.class.isInstance(dataSnapshot.getValue())){
+                        footprint = ((Long) dataSnapshot.getValue()).doubleValue();
+                    }else{
+                        footprint = (Double) dataSnapshot.getValue();
+                    }
                     if (flagDonation) {
                         double currfootprint = footprint - ((double) donationAmount / 10.0);
                         dbRefQuoteRequestList.setValue(currfootprint);
