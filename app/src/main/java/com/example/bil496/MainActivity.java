@@ -31,6 +31,7 @@ import com.example.bil496.forFirebase.Users;
 import com.example.bil496.foundations.WebScrapingGreenPeace;
 import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
+import com.example.bil496.ui.map.MapsFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
+
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -191,6 +194,23 @@ public class MainActivity extends AppCompatActivity {
                     users.setBio("");
 
                     ref.setValue(users);
+                }
+
+                if ((dataSnapshot.child("carbon").exists())) {
+                    //Toast.makeText(MainActivity.this, "Veritabanına kayıtlı", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = reference.child("Users").child(currentUserID);
+
+                    Users users = new Users();
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("total").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("flight").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("car").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("motorbike").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("publictransport").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("gas").setValue(0f);
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("carbon").child("electricity").setValue(0f);
                 }
             }
 
@@ -299,6 +319,14 @@ public class MainActivity extends AppCompatActivity {
         holder.content = (TextView) v.findViewById(R.id.content_foundationNew);
         holder.title.setText(titles[position]);
         holder.content.setText(contents[position]);*/
+    }
+
+    public void changeMapFrame(LayoutInflater layoutInflater){
+        MapsFragment mapsFragment = new MapsFragment(); //yeni acacagin fragment
+        MainActivity.this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_home_container, mapsFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
     //Opens a popup to add friend
