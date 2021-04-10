@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.bil496.R;
 import com.example.bil496.ui.dashboard.Callback;
 import com.example.bil496.ui.foundations.FoundationPageFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -70,9 +71,13 @@ public class AfterDonationDialog extends AppCompatDialogFragment {
     public void readData(final Callback callback){
         if (flagDonation){
             database = FirebaseDatabase.getInstance();
-            final DatabaseReference dbRefQuoteRequestList = database.getReference("Users").child("idil")
-                    .child("footprint");
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
+            final DatabaseReference dbRefQuoteRequestList = database.getReference("Users")
+                    .child(firebaseAuth
+                            .getCurrentUser()
+                            .getUid())
+                    .child("carbon").child("total");
 
             dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
                 @Override

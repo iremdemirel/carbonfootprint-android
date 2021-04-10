@@ -63,7 +63,8 @@ public class FoundationItemAdapter extends RecyclerView.Adapter {
                 activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_foundation,foundationPage)
-                        .addToBackStack(null).commit();
+                        .addToBackStack(null)
+                        .commit();
             }
 
 
