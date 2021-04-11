@@ -167,8 +167,8 @@ public class MapsFragment extends Fragment {
                 Element element1 = (Element) node;
                 String name = element1.getElementsByTagName("name").item(0).getTextContent();
                 String coordinates = ((Element) element1.getElementsByTagName("Point").item(0)).getElementsByTagName("coordinates").item(0).getTextContent();
-                LatLng recycleLoc = new LatLng(Double.parseDouble(coordinates.substring(0, coordinates.indexOf(",")))
-                        , Double.parseDouble(coordinates.substring(coordinates.indexOf(",") + 1,coordinates.lastIndexOf(","))));
+                LatLng recycleLoc = new LatLng(Double.parseDouble(coordinates.substring(coordinates.indexOf(",") + 1,coordinates.lastIndexOf(",")))
+                        , Double.parseDouble(coordinates.substring(0, coordinates.indexOf(","))));
                 googleMap.addMarker(new MarkerOptions().position(recycleLoc).title(name));
             }
         }
