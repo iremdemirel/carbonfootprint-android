@@ -91,7 +91,23 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                         ).execute(urlString, "driving");
                     }
                     lastLoc = userLocation;
-                    
+                    if (firstEntry) {
+                        Marker closestMarker = markerList.get(0);
+                        double closestDistance = 10000;
+                        for (int i = 0; i < markerList.size(); i++) {
+                            double sum = Math.abs(lastLoc.latitude - (markerList.get(i).getPosition().latitude));
+                            sum += Math.abs(lastLoc.longitude - (markerList.get(i).getPosition().longitude));
+                            if (closestDistance > sum) {
+                                closestMarker = markerList.get(i);
+                                closestDistance = sum;
+                            }
+                        }
+                        String urlString = getUrl(locationMarker.getPosition(), closestMarker.getPosition(), "driving");
+                        new FetchURL(getContext(), thisFragment
+                        ).execute(urlString, "driving");
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                        firstEntry = false;
+                    }
                 }
 
                 @Override
