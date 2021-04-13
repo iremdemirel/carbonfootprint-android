@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.carboncalculation.carbonfootprintcalculation.add_active_journey_menu">
+    tools:context=".ui.carboncalculation.add_menus.add_active_journey_menu">
 
         <TextView
             android:id="@+id/active_journey_text"

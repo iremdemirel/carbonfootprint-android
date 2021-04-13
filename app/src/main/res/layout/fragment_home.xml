@@ -131,16 +131,7 @@
             android:onClick="addFriendPopup"
             android:text="@string/arkadasekle"
             android:textColor="#ffffff" />
-        <Button
-            android:id="@+id/searchUserButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgreen"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="searchUserPopup"
-            android:text="@string/arkadasekle"
-            android:textColor="#ffffff" />
+
         <Button
             android:id="@+id/logout"
             android:layout_width="wrap_content"

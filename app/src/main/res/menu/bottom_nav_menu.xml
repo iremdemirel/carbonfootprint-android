@@ -17,17 +17,13 @@
         android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_blog"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Blog" />
     <item
         android:id="@+id/navigation_foundations"
         android:icon="@drawable/ic_foundations"
         android:title="@string/title_foundations" />
-   <!--
-    <item
-        android:id="@+id/navigation_game"
-        android:icon="@drawable/ic_foundations"
-        android:title="@string/neWorld" />
-    -->
+
+
 </menu>
