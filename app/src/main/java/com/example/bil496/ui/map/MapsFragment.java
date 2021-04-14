@@ -31,6 +31,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -59,6 +66,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     public boolean onRoute = false;
     public Fragment thisFragment = this;
     public ArrayList<Marker> markerList = null;
+    DatabaseReference reference;
+    public String currentUserID;
+    public long userScore = 0;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -73,8 +83,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            reference = FirebaseDatabase.getInstance().getReference();
+            currentUserID = FirebaseAuth.getInstance().getUid();
+
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             googleMapUni = googleMap;
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
             locationListener = new LocationListener() {
                 public LatLng lastLoc = null;
 
@@ -89,6 +104,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                         String urlString = getUrl(locationMarker.getPosition(), selectedMarker.getPosition(), "driving");
                         new FetchURL(getContext(), thisFragment
                         ).execute(urlString, "driving");
+                        double sum = Math.abs(selectedMarker.getPosition().latitude - locationMarker.getPosition().latitude);
+                        sum += Math.abs(selectedMarker.getPosition().longitude - locationMarker.getPosition().longitude);
+                        if (sum < 0.002) {
+                            currentPolyline.remove();
+                            onRoute = false;
+                            reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("score").setValue(userScore + 10);
+
+                            // karbon ayakizi düşür
+                        }
                     }
                     lastLoc = userLocation;
                     if (firstEntry) {
@@ -107,6 +131,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                         ).execute(urlString, "driving");
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
                         firstEntry = false;
+                        onRoute = true;
+                        selectedMarker = closestMarker;
                     }
                 }
 
@@ -142,11 +168,27 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         }
     };
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference databaseReference = reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("score");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userScore = (long) snapshot.getValue();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
