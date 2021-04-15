@@ -1,0 +1,131 @@
+Index: app/src/main/java/com/example/bil496/foundations/FoundationNewsListAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.bil496.foundations;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.BaseAdapter;\r\nimport android.widget.Filter;\r\nimport android.widget.Filterable;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport com.example.bil496.MainActivity;\r\nimport com.example.bil496.R;\r\nimport com.example.bil496.ui.dashboard.DashboardFragment;\r\nimport com.example.bil496.ui.dashboard.NewsFragment;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\n\r\npublic class FoundationNewsListAdapter extends BaseAdapter implements Filterable{\r\n    String[] titles;\r\n    String[] contents;\r\n    String[] displayedTitles;\r\n    String[] displayedContents;\r\n    Context context;\r\n    private static LayoutInflater inflater = null;\r\n\r\n    public String[] getDisplayedTitles() {\r\n        return displayedTitles;\r\n    }\r\n\r\n    public void setDisplayedTitles(String[] displayedTitles) {\r\n        this.displayedTitles = displayedTitles;\r\n    }\r\n\r\n    public String[] getDisplayedContents() {\r\n        return displayedContents;\r\n    }\r\n\r\n    public void setDisplayedContents(String[] displayedContents) {\r\n        this.displayedContents = displayedContents;\r\n    }\r\n\r\n    public FoundationNewsListAdapter(LayoutInflater inflater, ArrayList<String> titles, ArrayList<String> contents, Context context){\r\n        this.titles = (String[]) titles.toArray();\r\n        this.contents = (String[]) contents.toArray();\r\n        this.inflater = inflater;\r\n        this.context = context;\r\n        //inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);\r\n    }\r\n\r\n    public FoundationNewsListAdapter(LayoutInflater layoutInflater, Context context) {\r\n        this.inflater = layoutInflater;\r\n        this.context = context;\r\n    }\r\n\r\n    public void setTitles(String[] titles) {\r\n        this.titles = titles;\r\n    }\r\n\r\n    public void setContents(String[] contents) {\r\n        this.contents = contents;\r\n    }\r\n\r\n    @Override\r\n    public int getCount() {\r\n        return titles.length;\r\n    }\r\n\r\n    @Override\r\n    public Object getItem(int i) {\r\n        return i;\r\n    }\r\n\r\n    @Override\r\n    public long getItemId(int i) {\r\n        return i;\r\n    }\r\n\r\n    @Override\r\n    public View getView(int position, View view, ViewGroup viewGroup) {\r\n        final Holder holder = new Holder();\r\n        final View v;\r\n        v = inflater.inflate(R.layout.list_item, null);\r\n        holder.title = (TextView) v.findViewById(R.id.title_foundationNew);\r\n        holder.content = (TextView) v.findViewById(R.id.content_foundationNew);\r\n        holder.title.setText(displayedTitles[position]);\r\n        holder.content.setText(displayedContents[position]);\r\n        v.setOnClickListener(new View.OnClickListener(){\r\n\r\n            @Override\r\n            public void onClick(View view) {\r\n                ((MainActivity)context).changeFrame(holder.title.getText().toString(), holder.content.getText().toString(), inflater);\r\n\r\n            }\r\n        });\r\n        return v;\r\n    }\r\n\r\n    @Override\r\n    public Filter getFilter() {\r\n        Filter filter = new Filter(){\r\n\r\n            @Override\r\n            protected FilterResults performFiltering(CharSequence charSequence) {\r\n                FilterResults results = new FilterResults();\r\n                HashMap<String, String> filteredNews = new HashMap<String, String>();\r\n\r\n                if(charSequence == null || charSequence.length() == 0){\r\n                    results.count = titles.length;\r\n                    for(int a = 0; a< titles.length ; a++){\r\n                        filteredNews.put(titles[a], contents[a]);\r\n                    }\r\n                    results.values = filteredNews;\r\n\r\n                }\r\n\r\n                else{\r\n                    charSequence = charSequence.toString().toLowerCase();\r\n                    for(int a = 0; a<titles.length; a++){\r\n                        String title = titles[a];\r\n                        String content = contents[a];\r\n                        if(title.toLowerCase().contains(charSequence.toString().toLowerCase()) || content.toLowerCase().contains(charSequence.toString().toLowerCase())){\r\n                            filteredNews.put(title, content);\r\n                        }\r\n\r\n                    }\r\n                    results.values = filteredNews;\r\n                    results.count = filteredNews.size();\r\n\r\n                }\r\n                return results;\r\n            }\r\n\r\n            @Override\r\n            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {\r\n                HashMap<String, String> filteredNews = (HashMap<String, String>) filterResults.values;\r\n                if(displayedTitles == null){\r\n                    displayedTitles = new String[filteredNews.size()];\r\n                }\r\n                if(displayedContents == null){\r\n                    displayedContents = new String[filteredNews.size()];\r\n                }\r\n                int i = 0;\r\n                for(String title: filteredNews.keySet()){\r\n                    displayedTitles[i] = title;\r\n                    displayedContents[i] = filteredNews.get(title);\r\n                    i++;\r\n                }\r\n                notifyDataSetChanged();\r\n            }\r\n\r\n        };\r\n    return filter;\r\n    }\r\n\r\n    public class Holder{\r\n        TextView title;\r\n        TextView content;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/bil496/foundations/FoundationNewsListAdapter.java	(revision 43903ff2849ea4e4fe4a285e4e846fe8d06bef07)
++++ app/src/main/java/com/example/bil496/foundations/FoundationNewsListAdapter.java	(date 1618297735307)
+@@ -21,6 +21,8 @@
+ 
+ import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.Iterator;
++import java.util.Map;
+ 
+ public class FoundationNewsListAdapter extends BaseAdapter implements Filterable{
+     String[] titles;
+@@ -108,24 +110,39 @@
+ 
+             @Override
+             protected FilterResults performFiltering(CharSequence charSequence) {
++                System.out.println("performfiltering e girdi");
++                if(charSequence == null)
++                    System.out.println("cseq null");
++                else
++                    System.out.println("charSequence" + charSequence);
+                 FilterResults results = new FilterResults();
+                 HashMap<String, String> filteredNews = new HashMap<String, String>();
+ 
+                 if(charSequence == null || charSequence.length() == 0){
+-                    results.count = titles.length;
++
+                     for(int a = 0; a< titles.length ; a++){
+                         filteredNews.put(titles[a], contents[a]);
+                     }
+                     results.values = filteredNews;
++                    results.count = filteredNews.size();
+ 
+                 }
+ 
+                 else{
+-                    charSequence = charSequence.toString().toLowerCase();
++                    //charSequence = charSequence.toString().toLowerCase();
+                     for(int a = 0; a<titles.length; a++){
+                         String title = titles[a];
++                        if(title != null)
++                            System.out.println("title: " + title);
++                        else
++                            System.out.println("title null");
+                         String content = contents[a];
+-                        if(title.toLowerCase().contains(charSequence.toString().toLowerCase()) || content.toLowerCase().contains(charSequence.toString().toLowerCase())){
++                        if(content != null)
++                            System.out.println("content: " + content);
++                        else
++                            System.out.println("content null");
++
++                        if((title != null && content != null) && (title.toLowerCase().contains(charSequence.toString().toLowerCase()) || content.toLowerCase().contains(charSequence.toString().toLowerCase()))){
+                             filteredNews.put(title, content);
+                         }
+ 
+@@ -134,29 +151,54 @@
+                     results.count = filteredNews.size();
+ 
+                 }
++                if(results != null)
++                System.out.println("return result öncesinde result null değil");
++                else
++                    System.out.println("return result öncesinde result null");
+                 return results;
+             }
+ 
+             @Override
+             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+-                HashMap<String, String> filteredNews = (HashMap<String, String>) filterResults.values;
+-                if(displayedTitles == null){
+-                    displayedTitles = new String[filteredNews.size()];
+-                }
+-                if(displayedContents == null){
+-                    displayedContents = new String[filteredNews.size()];
+-                }
+-                int i = 0;
+-                for(String title: filteredNews.keySet()){
+-                    displayedTitles[i] = title;
+-                    displayedContents[i] = filteredNews.get(title);
+-                    i++;
+-                }
+-                notifyDataSetChanged();
++
++                /*if(filterResults.count == 0){
++                    //notifyDataSetInvalidated();
++                }
++                else{*/
++                    HashMap<String, String> filteredNews = (HashMap<String, String>) filterResults.values;
++                    if(filterResults.values == null){
++                        System.out.println("null geldi");
++                    }
++                     System.out.println("count sayısı: "  + filterResults.count);
++                    if(filteredNews == null){
++                        System.out.println("hashmap null geldi");
++                    }
++                    if(displayedTitles == null){
++                        displayedTitles = new String[filteredNews.size()];
++                    }
++                    if(displayedContents == null){
++                        displayedContents = new String[filteredNews.size()];
++                    }
++                    int i = 0;
++                    /*for(String title: filteredNews.keySet()){
++                        displayedTitles[i] = title;
++                        displayedContents[i] = filteredNews.get(title);
++                        i++;
++                    }*/
++                    Iterator it = filteredNews.entrySet().iterator();
++                    while(it.hasNext()){
++                        HashMap.Entry pair = (Map.Entry)it.next();
++                        displayedTitles[i] = (String) pair.getKey();
++                        displayedContents[i] = (String) pair.getValue();
++                        i++;
++                    }
++                    notifyDataSetChanged();
++                //}
++
+             }
+ 
+         };
+-    return filter;
++        return filter;
+     }
+ 
+     public class Holder{

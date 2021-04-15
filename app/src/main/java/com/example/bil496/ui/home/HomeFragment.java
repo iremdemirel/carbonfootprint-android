@@ -1,6 +1,7 @@
 package com.example.bil496.ui.home;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class HomeFragment extends Fragment {
 
@@ -52,6 +62,8 @@ public class HomeFragment extends Fragment {
     TextView name, email, bio;
     FirebaseAuth mAuth;
     EditText editbio;
+    EditText searchUserText;
+    Button searchUserButton;
     AlertDialog dialog;
     Button editBioButton;
     DatabaseReference reference;
@@ -65,13 +77,17 @@ public class HomeFragment extends Fragment {
 
     private String currentUserID;
     private AlertDialog friendPopup;
+    private AlertDialog searchPopup;
+    private View myRoot;
+    Context cont;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        cont = getContext();
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        myRoot =  inflater.inflate(R.layout.fragment_home, container, false);
         imageView = (ImageView) root.findViewById(R.id.photo);
         name = (TextView) root.findViewById(R.id.name);
         email = (TextView) root.findViewById(R.id.email);
@@ -79,6 +95,63 @@ public class HomeFragment extends Fragment {
 
         reference = FirebaseDatabase.getInstance().getReference();
         currentUserID = FirebaseAuth.getInstance().getUid();
+        searchUserButton = (Button) root.findViewById(R.id.searchUserButton);
+        searchUserButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference();
+
+
+                dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+                    @Override
+                    public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+                        LinkedList<Holder> scores = new LinkedList<Holder>();
+                        System.out.println("on dta change ici");
+                        for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
+                            if(postSnapshot.hasChild("score")){
+                                System.out.println("score ekleme");
+                                scores.add(new Holder(postSnapshot.child("name").getValue(String.class),postSnapshot.child("score").getValue(Float.class)));
+
+                            }
+                            else{
+                                scores.add(new Holder(postSnapshot.child("name").getValue(String.class),(float)0));
+                            }
+
+                        }
+                        Collections.sort(scores);
+                        StringBuilder sb = new StringBuilder();
+                        for(Holder holder : scores){
+                            sb.append(holder.name + "\t" + holder.value + "\n");
+                        }
+                        System.out.println("sb içi: " + sb.toString());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(cont);
+                        builder.setCancelable(true);
+                        builder.setTitle("Lider Tablosu");
+                        builder.setMessage(sb.toString());
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                        builder.show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
 
         recyclerView = (RecyclerView) root.findViewById(R.id.friendrecyclerView);
         recycleMap = (Button) root.findViewById(R.id.RecycleMapButton);
@@ -279,5 +352,50 @@ public class HomeFragment extends Fragment {
         friendPopup.show();
 
     }
+
+
+    public class Holder implements Comparable{
+        public String name;
+        public Float value;
+
+        public Holder(String name, Float score) {
+            this.name = name;
+            this.value = score;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            Holder temp = (Holder) o;
+            if(this.value > temp.value){
+                return 1;
+            }
+            else if(this.value < temp.value){
+                return -1;
+            }
+            else{
+                return 0;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
