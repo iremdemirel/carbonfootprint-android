@@ -21,6 +21,8 @@ import com.example.bil496.ui.dashboard.NewsFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class FoundationNewsListAdapter extends BaseAdapter implements Filterable{
     String[] titles;
@@ -113,24 +115,39 @@ public class FoundationNewsListAdapter extends BaseAdapter implements Filterable
 
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
+                System.out.println("performfiltering e girdi");
+                if(charSequence == null)
+                    System.out.println("cseq null");
+                else
+                    System.out.println("charSequence" + charSequence);
                 FilterResults results = new FilterResults();
                 HashMap<String, String> filteredNews = new HashMap<String, String>();
 
                 if(charSequence == null || charSequence.length() == 0){
-                    results.count = titles.length;
+
                     for(int a = 0; a< titles.length ; a++){
                         filteredNews.put(titles[a], contents[a]);
                     }
                     results.values = filteredNews;
+                    results.count = filteredNews.size();
 
                 }
 
                 else{
-                    charSequence = charSequence.toString().toLowerCase();
+                    //charSequence = charSequence.toString().toLowerCase();
                     for(int a = 0; a<titles.length; a++){
                         String title = titles[a];
+                        if(title != null)
+                            System.out.println("title: " + title);
+                        else
+                            System.out.println("title null");
                         String content = contents[a];
-                        if(title.toLowerCase().contains(charSequence.toString().toLowerCase()) || content.toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        if(content != null)
+                            System.out.println("content: " + content);
+                        else
+                            System.out.println("content null");
+
+                        if((title != null && content != null) && (title.toLowerCase().contains(charSequence.toString().toLowerCase()) || content.toLowerCase().contains(charSequence.toString().toLowerCase()))){
                             filteredNews.put(title, content);
                         }
 
@@ -139,29 +156,54 @@ public class FoundationNewsListAdapter extends BaseAdapter implements Filterable
                     results.count = filteredNews.size();
 
                 }
+                if(results != null)
+                System.out.println("return result öncesinde result null değil");
+                else
+                    System.out.println("return result öncesinde result null");
                 return results;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                HashMap<String, String> filteredNews = (HashMap<String, String>) filterResults.values;
-                if(displayedTitles == null){
-                    displayedTitles = new String[filteredNews.size()];
+
+                /*if(filterResults.count == 0){
+                    //notifyDataSetInvalidated();
                 }
-                if(displayedContents == null){
-                    displayedContents = new String[filteredNews.size()];
-                }
-                int i = 0;
-                for(String title: filteredNews.keySet()){
-                    displayedTitles[i] = title;
-                    displayedContents[i] = filteredNews.get(title);
-                    i++;
-                }
-                notifyDataSetChanged();
+                else{*/
+                    HashMap<String, String> filteredNews = (HashMap<String, String>) filterResults.values;
+                    if(filterResults.values == null){
+                        System.out.println("null geldi");
+                    }
+                     System.out.println("count sayısı: "  + filterResults.count);
+                    if(filteredNews == null){
+                        System.out.println("hashmap null geldi");
+                    }
+                    if(displayedTitles == null){
+                        displayedTitles = new String[filteredNews.size()];
+                    }
+                    if(displayedContents == null){
+                        displayedContents = new String[filteredNews.size()];
+                    }
+                    int i = 0;
+                    /*for(String title: filteredNews.keySet()){
+                        displayedTitles[i] = title;
+                        displayedContents[i] = filteredNews.get(title);
+                        i++;
+                    }*/
+                    Iterator it = filteredNews.entrySet().iterator();
+                    while(it.hasNext()){
+                        HashMap.Entry pair = (Map.Entry)it.next();
+                        displayedTitles[i] = (String) pair.getKey();
+                        displayedContents[i] = (String) pair.getValue();
+                        i++;
+                    }
+                    notifyDataSetChanged();
+                //}
+
             }
 
         };
-    return filter;
+        return filter;
     }
 
     public class Holder{
