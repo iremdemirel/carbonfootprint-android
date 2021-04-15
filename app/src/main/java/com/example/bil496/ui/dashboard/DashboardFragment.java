@@ -127,6 +127,22 @@ public class DashboardFragment extends Fragment implements SearchView.OnQueryTex
                         newsContent.add(content);
                     }
                 }
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
+
+                    for(DataSnapshot postSnapshot2: postSnapshot.child("blog").getChildren()){
+
+                        String content = postSnapshot2.child("blogtext").child("text").getValue(String.class);
+                        String title = postSnapshot2.child("blogtext").child("header").getValue(String.class);
+                        newsTitle.add(title);
+                        newsContent.add(content);
+                    }
+                }
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
+                    String content = postSnapshot.child("bio").getValue(String.class) + "\n" + postSnapshot.child("email").getValue(String.class);
+                    String title = postSnapshot.child("name").getValue(String.class);
+                    newsTitle.add(title);
+                    newsContent.add(content);
+                }
                 String[] titlearr = Arrays.copyOf(newsTitle.toArray(), newsTitle.size(), String[].class);
                 String[] contentarr = Arrays.copyOf(newsContent.toArray(), newsContent.size(), String[].class);
                 listAdapter.setTitles(titlearr);
