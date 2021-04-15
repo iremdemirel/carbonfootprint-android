@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment {
 
 
     private FirebaseRecyclerOptions<Users> posts;
+    private FirebaseRecyclerOptions<Users> boardPosts;
     private FirebaseRecyclerAdapter<Users, FriendViewHolder> adapter;
     private FirebaseRecyclerAdapter<Users, BoardViewHolder> boardAdapter;
     private RecyclerView recyclerView;
@@ -303,8 +304,8 @@ public class HomeFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
 
-        posts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users"), Users.class).build();
-        boardAdapter = new FirebaseRecyclerAdapter<Users, com.example.bil496.ui.home.BoardViewHolder>(posts) {
+        boardPosts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users").orderByChild("carbon/total"), Users.class).build();
+        boardAdapter = new FirebaseRecyclerAdapter<Users, com.example.bil496.ui.home.BoardViewHolder>(boardPosts) {
             @NonNull
             @Override
             public com.example.bil496.ui.home.BoardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
