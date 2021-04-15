@@ -132,17 +132,27 @@
             android:text="@string/arkadasekle"
             android:textColor="#ffffff" />
 
-
         <Button
-            android:id="@+id/logout"
+            android:id="@+id/toAddBoardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/darkgreen"
             android:clickable="true"
             android:focusable="true"
+            android:text="Lider Tablosu"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgreen"
+            android:clickable="true"
+            android:focusable="true"
             android:onClick="logout"
             android:text="@string/LOGOUT"
             android:textColor="#ffffff" />
+
 
     </LinearLayout>
 
@@ -169,20 +179,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio">
 
-
-
-
-        <Button
-            android:id="@+id/searchUserButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/darkgreen"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/leaderBoard"
-            android:textColor="#ffffff"
-            tools:ignore="MissingConstraints"
-            />
     </LinearLayout>
 
 
