@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class CarbonCalculation extends Fragment{
+public class CarbonCalculation extends Fragment {
 
     public static total_data_listener total_data = new total_data_listener(0);
     public static car_data_listener car_data = new car_data_listener(0);
@@ -57,8 +58,6 @@ public class CarbonCalculation extends Fragment{
     public static electricity_data_listener electricity_data = new electricity_data_listener(0);
 
 
-
-    private LinearLayout activejourney;
     private LinearLayout flight;
     private LinearLayout car;
     private LinearLayout bike;
@@ -87,13 +86,11 @@ public class CarbonCalculation extends Fragment{
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-        System.out.println("HHHHHHHHHHEEEEEEEEEEEEEEEEEEEY"+reference.child(firebaseAuth.getCurrentUser().getUid()).child("carbon"));
-
         v = getView();
         pieChart = (PieChart) v.findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5,10,5,5);
+        pieChart.setExtraOffsets(5, 10, 5, 5);
         pieChart.setDragDecelerationFrictionCoef(0.95f);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.WHITE);
@@ -103,7 +100,7 @@ public class CarbonCalculation extends Fragment{
         final ArrayList<PieEntry> yValues = new ArrayList<>();
 
 
-        final DatabaseReference reference_total= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total");
+        final DatabaseReference reference_total = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total");
         reference_total.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,7 +113,7 @@ public class CarbonCalculation extends Fragment{
             }
         });
 
-        final DatabaseReference reference_flight= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("flight");
+        final DatabaseReference reference_flight = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("flight");
         reference_flight.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,7 +125,7 @@ public class CarbonCalculation extends Fragment{
 
             }
         });
-        final DatabaseReference reference_car= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("car");
+        final DatabaseReference reference_car = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("car");
         reference_car.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -141,7 +138,7 @@ public class CarbonCalculation extends Fragment{
 
             }
         });
-        final DatabaseReference reference_motorbike= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("motorbike");
+        final DatabaseReference reference_motorbike = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("motorbike");
         reference_motorbike.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -153,7 +150,7 @@ public class CarbonCalculation extends Fragment{
 
             }
         });
-        final DatabaseReference reference_publictransport= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("publictransport");
+        final DatabaseReference reference_publictransport = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("publictransport");
         reference_publictransport.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -165,7 +162,7 @@ public class CarbonCalculation extends Fragment{
 
             }
         });
-        final DatabaseReference reference_gas= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("gas");
+        final DatabaseReference reference_gas = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("gas");
         reference_gas.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -177,7 +174,7 @@ public class CarbonCalculation extends Fragment{
 
             }
         });
-        final DatabaseReference reference_electricity= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("electricity");
+        final DatabaseReference reference_electricity = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("electricity");
         reference_electricity.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -198,8 +195,8 @@ public class CarbonCalculation extends Fragment{
         yValues.add(new PieEntry(electricity_data.getElectricity_data(), "Elektrik"));
 
 
-      pieChart.animate();
-        dataSet = new PieDataSet(yValues,"Countries");
+        pieChart.animate();
+        dataSet = new PieDataSet(yValues, "Countries");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
@@ -210,7 +207,7 @@ public class CarbonCalculation extends Fragment{
         pieChart.setData(data);
 
         //activejourney = (LinearLayout) v.findViewById(R.id.active_journey_button);
-        flight =(LinearLayout) v.findViewById(R.id.fly_button);
+        flight = (LinearLayout) v.findViewById(R.id.fly_button);
         car = (LinearLayout) v.findViewById(R.id.car_button);
         bike = (LinearLayout) v.findViewById(R.id.bicycle_button);
         bus = (LinearLayout) v.findViewById(R.id.bus_button);
@@ -220,12 +217,12 @@ public class CarbonCalculation extends Fragment{
         flight_data.setListener(new flight_data_listener.ChangeListener() {
             @Override
             public void onChange() {
-                yValues.set(0,new PieEntry(flight_data.getFlight_data(), "Uçuş"));
+                yValues.set(0, new PieEntry(flight_data.getFlight_data(), "Uçuş"));
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
-                total_data.setTotal_data(flight_data.getFlight_data()+car_data.getCar_data()+motorbike_data.getMotorbike_data()+publictransport_data.getPublictransport_data()+gas_data.getGas_data()+electricity_data.getElectricity_data());
+                total_data.setTotal_data(flight_data.getFlight_data() + car_data.getCar_data() + motorbike_data.getMotorbike_data() + publictransport_data.getPublictransport_data() + gas_data.getGas_data() + electricity_data.getElectricity_data());
                 reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("flight").setValue(flight_data.getFlight_data());
-
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
             }
         });
 
@@ -240,20 +237,20 @@ public class CarbonCalculation extends Fragment{
         car.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               add_car_menu dialog = new add_car_menu();
-               dialog.show(getFragmentManager(), "add_car_menu");
+                add_car_menu dialog = new add_car_menu();
+                dialog.show(getFragmentManager(), "add_car_menu");
             }
         });
 
         car_data.setListener(new car_data_listener.ChangeListener() {
             @Override
             public void onChange() {
-                yValues.set(1,new PieEntry(car_data.getCar_data(), "Araba"));
+                yValues.set(1, new PieEntry(car_data.getCar_data(), "Araba"));
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
-                total_data.setTotal_data(flight_data.getFlight_data()+car_data.getCar_data()+motorbike_data.getMotorbike_data()+publictransport_data.getPublictransport_data()+gas_data.getGas_data()+electricity_data.getElectricity_data());
+                total_data.setTotal_data(flight_data.getFlight_data() + car_data.getCar_data() + motorbike_data.getMotorbike_data() + publictransport_data.getPublictransport_data() + gas_data.getGas_data() + electricity_data.getElectricity_data());
                 reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("car").setValue(car_data.getCar_data());
-
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
             }
         });
 
@@ -263,8 +260,9 @@ public class CarbonCalculation extends Fragment{
                 yValues.set(2, new PieEntry(motorbike_data.getMotorbike_data(), "Motorsiklet"));
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
-                total_data.setTotal_data(flight_data.getFlight_data()+car_data.getCar_data()+motorbike_data.getMotorbike_data()+publictransport_data.getPublictransport_data()+gas_data.getGas_data()+electricity_data.getElectricity_data());
+                total_data.setTotal_data(flight_data.getFlight_data() + car_data.getCar_data() + motorbike_data.getMotorbike_data() + publictransport_data.getPublictransport_data() + gas_data.getGas_data() + electricity_data.getElectricity_data());
                 reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("motorbike").setValue(motorbike_data.getMotorbike_data());
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
             }
         });
 
@@ -283,8 +281,9 @@ public class CarbonCalculation extends Fragment{
                 yValues.set(3, new PieEntry(publictransport_data.getPublictransport_data(), "Toplu Taşıma"));
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
-                total_data.setTotal_data(flight_data.getFlight_data()+car_data.getCar_data()+motorbike_data.getMotorbike_data()+publictransport_data.getPublictransport_data()+gas_data.getGas_data()+electricity_data.getElectricity_data());
+                total_data.setTotal_data(flight_data.getFlight_data() + car_data.getCar_data() + motorbike_data.getMotorbike_data() + publictransport_data.getPublictransport_data() + gas_data.getGas_data() + electricity_data.getElectricity_data());
                 reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("publictransport").setValue(publictransport_data.getPublictransport_data());
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
             }
         });
 
@@ -299,12 +298,12 @@ public class CarbonCalculation extends Fragment{
         electricity_data.setListener(new electricity_data_listener.ChangeListener() {
             @Override
             public void onChange() {
-                yValues.set(5, new PieEntry(electricity_data.getElectricity_data(),"Elektrik"));
+                yValues.set(5, new PieEntry(electricity_data.getElectricity_data(), "Elektrik"));
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
-                total_data.setTotal_data(flight_data.getFlight_data()+car_data.getCar_data()+motorbike_data.getMotorbike_data()+publictransport_data.getPublictransport_data()+gas_data.getGas_data()+electricity_data.getElectricity_data());
+                total_data.setTotal_data(flight_data.getFlight_data() + car_data.getCar_data() + motorbike_data.getMotorbike_data() + publictransport_data.getPublictransport_data() + gas_data.getGas_data() + electricity_data.getElectricity_data());
                 reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("electricity").setValue(electricity_data.getElectricity_data());
-
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
             }
         });
         electricity.setOnClickListener(new View.OnClickListener() {
@@ -315,29 +314,23 @@ public class CarbonCalculation extends Fragment{
             }
         });
 
-       gas_data.setListener(new gas_data_listener.ChangeListener() {
-           @Override
-           public void onChange() {
-               yValues.set(4, new PieEntry(gas_data.getGas_data(),"Doğal Gaz"));
-               pieChart.notifyDataSetChanged();
-               pieChart.invalidate();
-               total_data.setTotal_data(flight_data.getFlight_data()+car_data.getCar_data()+motorbike_data.getMotorbike_data()+publictransport_data.getPublictransport_data()+gas_data.getGas_data()+electricity_data.getElectricity_data());
-               reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("gas").setValue(gas_data.getGas_data());
-           }
-       });
+        gas_data.setListener(new gas_data_listener.ChangeListener() {
+            @Override
+            public void onChange() {
+                yValues.set(4, new PieEntry(gas_data.getGas_data(), "Doğal Gaz"));
+                pieChart.notifyDataSetChanged();
+                pieChart.invalidate();
+                total_data.setTotal_data(flight_data.getFlight_data() + car_data.getCar_data() + motorbike_data.getMotorbike_data() + publictransport_data.getPublictransport_data() + gas_data.getGas_data() + electricity_data.getElectricity_data());
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("gas").setValue(gas_data.getGas_data());
+                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
+            }
+        });
 
         gas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 add_gas_menu dialog = new add_gas_menu();
                 dialog.show(getFragmentManager(), "add_gas_menu");
-            }
-        });
-
-        total_data.setListener(new total_data_listener.ChangeListener() {
-            @Override
-            public void onChange() {
-                reference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("carbon").child("total").setValue(total_data.getTotal_data());
             }
         });
 
