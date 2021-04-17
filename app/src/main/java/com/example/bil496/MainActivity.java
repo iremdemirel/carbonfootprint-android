@@ -29,6 +29,7 @@ import com.example.bil496.forFirebase.Blog;
 import com.example.bil496.forFirebase.BlogText;
 import com.example.bil496.forFirebase.Users;
 import com.example.bil496.ui.dashboard.NewsFragment;
+import com.example.bil496.ui.home.HomeFragment;
 import com.example.bil496.ui.map.MapsFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
-
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -297,7 +297,8 @@ public class MainActivity extends AppCompatActivity {
         editbio.setText(bio.getText());
         dialog.show();
     }
-    public void changeFrame(String title, String content, LayoutInflater inflater){
+
+    public void changeFrame(String title, String content, LayoutInflater inflater) {
         /*FoundationNewAdapter foundationNewAdapter = new FoundationNewAdapter(title, content, MainActivity.this);
         View root = inflater.inflate(fragment_dashboard, container, false);
         listlistView = root.findViewById(R.id.lv_foundationNews);*/
@@ -324,10 +325,19 @@ public class MainActivity extends AppCompatActivity {
         holder.content.setText(contents[position]);*/
     }
 
-    public void changeMapFrame(LayoutInflater layoutInflater){
+    public void changeMapFrame(LayoutInflater layoutInflater) {
         MapsFragment mapsFragment = new MapsFragment(); //yeni acacagin fragment
         MainActivity.this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_home_container, mapsFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void reChangeMapFrame(LayoutInflater layoutInflater) {
+        HomeFragment homeFragment = new HomeFragment(); //yeni acacagin fragment
+
+        MainActivity.this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_maps, homeFragment, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
     }

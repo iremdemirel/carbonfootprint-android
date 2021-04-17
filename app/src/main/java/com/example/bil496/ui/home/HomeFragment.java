@@ -77,6 +77,8 @@ public class HomeFragment extends Fragment {
     private FirebaseRecyclerAdapter<Users, BoardViewHolder> boardAdapter;
     private RecyclerView recyclerView;
 
+    private boolean ismain= true;
+
     private String currentUserID;
     private AlertDialog friendPopup;
     private AlertDialog searchPopup;
@@ -168,7 +170,13 @@ public class HomeFragment extends Fragment {
         recycleMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).changeMapFrame(getLayoutInflater());
+                if(ismain){
+                    ((MainActivity)getActivity()).changeMapFrame(getLayoutInflater());
+                    ismain = false;
+                }else {
+                    ((MainActivity)getActivity()).reChangeMapFrame(getLayoutInflater());
+                }
+
             }
         });
         initProfileInfo();
