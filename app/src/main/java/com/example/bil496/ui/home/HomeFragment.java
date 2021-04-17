@@ -1,6 +1,7 @@
 package com.example.bil496.ui.home;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bil496.LoginActivity;
+import com.example.bil496.MainActivity;
 import com.example.bil496.R;
 import com.example.bil496.forFirebase.Users;
+import com.example.bil496.ui.dashboard.NewsFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,7 +45,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class HomeFragment extends Fragment {
 
@@ -50,25 +62,35 @@ public class HomeFragment extends Fragment {
     TextView name, email, bio;
     FirebaseAuth mAuth;
     EditText editbio;
+    EditText searchUserText;
+    Button searchUserButton;
     AlertDialog dialog;
     Button editBioButton;
     DatabaseReference reference;
+    Button recycleMap;
     public static AlertDialog frienddialog;
 
 
     private FirebaseRecyclerOptions<Users> posts;
+    private FirebaseRecyclerOptions<Users> boardPosts;
     private FirebaseRecyclerAdapter<Users, FriendViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Users, BoardViewHolder> boardAdapter;
     private RecyclerView recyclerView;
 
     private String currentUserID;
     private AlertDialog friendPopup;
+    private AlertDialog searchPopup;
+    private Button boardButton;
+    private View myRoot;
+    Context cont;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        cont = getContext();
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        myRoot =  inflater.inflate(R.layout.fragment_home, container, false);
         imageView = (ImageView) root.findViewById(R.id.photo);
         name = (TextView) root.findViewById(R.id.name);
         email = (TextView) root.findViewById(R.id.email);
@@ -76,8 +98,79 @@ public class HomeFragment extends Fragment {
 
         reference = FirebaseDatabase.getInstance().getReference();
         currentUserID = FirebaseAuth.getInstance().getUid();
+        boardButton = (Button) root.findViewById(R.id.toAddBoardButton);
+        boardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBoardPopup(view);
+            }
+        });
+        /*searchUserButton = (Button) root.findViewById(R.id.searchUserButton);
+        searchUserButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference dbRefQuoteRequestList = firebaseDatabase.getReference();
+
+
+                dbRefQuoteRequestList.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+                    @Override
+                    public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+                        LinkedList<Holder> scores = new LinkedList<Holder>();
+                        System.out.println("on dta change ici");
+                        for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
+                            if(postSnapshot.hasChild("score")){
+                                System.out.println("score ekleme");
+                                scores.add(new Holder(postSnapshot.child("name").getValue(String.class),postSnapshot.child("score").getValue(Float.class)));
+
+                            }
+                            else{
+                                scores.add(new Holder(postSnapshot.child("name").getValue(String.class),(float)0));
+                            }
+
+                        }
+                        Collections.sort(scores);
+                        StringBuilder sb = new StringBuilder();
+                        for(Holder holder : scores){
+                            sb.append(holder.name + "\t" + holder.value + "\n");
+                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(cont);
+                        builder.setCancelable(true);
+                        builder.setTitle("Lider Tablosu");
+                        builder.setMessage(sb.toString());
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        builder.show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });*/
 
         recyclerView = (RecyclerView) root.findViewById(R.id.friendrecyclerView);
+        recycleMap = (Button) root.findViewById(R.id.RecycleMapButton);
+        recycleMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).changeMapFrame(getLayoutInflater());
+            }
+        });
         initProfileInfo();
 
         return root;
@@ -193,6 +286,65 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
+    public void addBoardPopup(final View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = (View) inflater.inflate(R.layout.board_dialog_layout, null);
+
+        builder.setView(dialogView);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        RecyclerView rv = (RecyclerView) dialogView.findViewById(R.id.dialogRecycler);
+        rv.hasFixedSize();
+        rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+
+        boardPosts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users").orderByChild("carbon/total"), Users.class).build();
+        boardAdapter = new FirebaseRecyclerAdapter<Users, com.example.bil496.ui.home.BoardViewHolder>(boardPosts) {
+            @NonNull
+            @Override
+            public com.example.bil496.ui.home.BoardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.board_view_layout, parent, false);
+                return new com.example.bil496.ui.home.BoardViewHolder(view);
+
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull com.example.bil496.ui.home.BoardViewHolder holder, final int position, @NonNull final Users model) {
+                if(model != null){
+                    if(model.getCarbon() != null){
+                        holder.name.setText(model.getName() + "\t" + model.getCarbon().get("total") + "");
+                    }
+                    else{
+                        holder.name.setText(model.getName() + "\t0.0");
+                    }
+
+
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+                    });
+                }
+
+            }
+        };
+
+        boardAdapter.startListening();
+        rv.setAdapter(boardAdapter);
+
+        searchPopup = builder.create();
+
+        searchPopup.show();
+
+    }
+
+
     //add friend dialog
     public void addFriendPopup(final View view) {
 
@@ -271,5 +423,31 @@ public class HomeFragment extends Fragment {
         friendPopup.show();
 
     }
+
+
+    public class Holder implements Comparable{
+        public String name;
+        public Float value;
+
+        public Holder(String name, Float score) {
+            this.name = name;
+            this.value = score;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            Holder temp = (Holder) o;
+            if(this.value > temp.value){
+                return 1;
+            }
+            else if(this.value < temp.value){
+                return -1;
+            }
+            else{
+                return 0;
+            }
+        }
+    }
+
 }
 

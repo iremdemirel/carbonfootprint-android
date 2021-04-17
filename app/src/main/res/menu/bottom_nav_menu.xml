@@ -22,7 +22,7 @@
         android:title="Blog" />
     <item
         android:id="@+id/navigation_foundations"
-        android:icon="@drawable/ic_foundations"
+        android:icon="@drawable/icon_foundation"
         android:title="@string/title_foundations" />
 
 

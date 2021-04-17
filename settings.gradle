@@ -1,2 +1,5 @@
 include ':app'
 rootProject.name = "bil496"
+
+include ':unityLibrary'
+project(':unityLibrary').projectDir=new File('./unityLibrary')
