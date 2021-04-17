@@ -50,23 +50,19 @@ public class WebScrapingGreenPeace {
 
                             }
                         });
-                        if(newsTitle.equals(lastTitleInDb)){
-                            System.out.println("** Scraping is skipping.");
-                            break;
-                        }
-                        else{
-                            System.out.println("****Scraping: " + newsTitle);
-                            Elements news = newsDoc.select("div.container div.post-content div.post-content-lead article.post-details.clearfix").get(0).children();
-                            String content = news.text();
-                            FoundationNews newsObj = new FoundationNews(newsTitle, content, new Date());
-                            foundation.addNews(newsObj);
-                        }
+
+                        System.out.println("****Scraping: " + newsTitle);
+                        Elements news = newsDoc.select("div.container div.post-content div.post-content-lead article.post-details.clearfix").get(0).children();
+                        String content = news.text();
+                        FoundationNews newsObj = new FoundationNews(newsTitle, content, new Date());
+                        foundation.addNews(newsObj);
 
                     }
                     System.out.println("**Scraping is done");
 
-                    DatabaseReference dbRef = database.getReference("Foundations/Greenpeace");
-                    dbRef.setValue(foundation);
+                    DatabaseReference dbRef = database.getReference("Foundations/Greenpeace/bulletin");
+                    dbRef.setValue(foundation.getBulletin());
+
 
 
                 }catch(IOException e){
