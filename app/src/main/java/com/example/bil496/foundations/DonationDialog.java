@@ -22,6 +22,7 @@ import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class DonationDialog extends AppCompatDialogFragment {
@@ -62,6 +63,9 @@ public class DonationDialog extends AppCompatDialogFragment {
 
                             }
                         });
+
+                        AfterDonationDialog afterDonationDialog = new AfterDonationDialog(foundationName, donation);
+                        afterDonationDialog.show(getActivity().getSupportFragmentManager(),"after_donation_dialog");
 
                     }
         });

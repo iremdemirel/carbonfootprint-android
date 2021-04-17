@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FoundationFragment extends Fragment {
 
-    RecyclerView recyclerView;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 

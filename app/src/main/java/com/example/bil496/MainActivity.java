@@ -28,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bil496.forFirebase.Blog;
 import com.example.bil496.forFirebase.BlogText;
 import com.example.bil496.forFirebase.Users;
+import com.example.bil496.foundations.WebScrapingGreenPeace;
+import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
 import com.example.bil496.ui.map.MapsFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -99,14 +101,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
-
+/*
         // web scraping for foundations bulletin
-        /*WebScrapingTema temaScraper= new WebScrapingTema();
+        WebScrapingTema temaScraper= new WebScrapingTema();
         temaScraper.scrape();
         WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
         greenPeaceScraper.scrape();
-        */
+*/
 
 //        FoundationData.totalDonation[0] = dbRef.get().toString()
         setNotification();

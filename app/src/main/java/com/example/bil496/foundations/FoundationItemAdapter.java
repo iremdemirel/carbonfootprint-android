@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FoundationItemAdapter extends RecyclerView.Adapter {
+    public boolean isClickable = true;
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,12 +56,17 @@ public class FoundationItemAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            AppCompatActivity activity = (AppCompatActivity)v.getContext();
-            FoundationPageFragment foundationPage = new FoundationPageFragment((String)foundation_desc.getText(),foundation_logo);
-            activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_foundation,foundationPage)
-                    .addToBackStack(null).commit();
+            if(isClickable){
+                isClickable = false;
+                AppCompatActivity activity = (AppCompatActivity)v.getContext();
+                FoundationPageFragment foundationPage = new FoundationPageFragment((String)foundation_desc.getText(),foundation_logo);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_foundation,foundationPage)
+                        .addToBackStack(null)
+                        .commit();
+            }
+
 
         }
     }
