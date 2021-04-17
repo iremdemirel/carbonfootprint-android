@@ -99,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-/*
+
         // web scraping for foundations bulletin
         WebScrapingTema temaScraper= new WebScrapingTema();
         temaScraper.scrape();
         WebScrapingGreenPeace greenPeaceScraper = new WebScrapingGreenPeace();
         greenPeaceScraper.scrape();
-*/
+
 
 //        FoundationData.totalDonation[0] = dbRef.get().toString()
         setNotification();

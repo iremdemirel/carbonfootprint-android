@@ -65,8 +65,8 @@ public class WebScrapingTema {
                     }
                     System.out.println("**Scraping is done");
 
-                    DatabaseReference dbRef = database.getReference("Foundations/Tema");
-                    dbRef.setValue(foundation);
+                    DatabaseReference dbRef = database.getReference("Foundations/Tema/bulletin");
+                    dbRef.setValue(foundation.getBulletin());
 /* to see and check the content, for logs
                     ArrayList<FoundationNews> finalbulletin = foundation.getBulletin();
                     for(int i = 0; i<finalbulletin.size(); i++){
