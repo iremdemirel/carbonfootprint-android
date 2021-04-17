@@ -175,6 +175,7 @@ public class HomeFragment extends Fragment {
                     ismain = false;
                 }else {
                     ((MainActivity)getActivity()).reChangeMapFrame(getLayoutInflater());
+                    ismain = true;
                 }
 
             }
