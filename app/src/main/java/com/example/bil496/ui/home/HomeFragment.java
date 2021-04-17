@@ -387,7 +387,9 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (key != null) {
-                                    if ((dataSnapshot.hasChild(key))) {
+                                    if (currentUserID.equalsIgnoreCase(key)) {
+                                        Toast.makeText(getContext(), "Kendi hesabınız", Toast.LENGTH_SHORT).show();
+                                    } else if ((dataSnapshot.hasChild(key))) {
 
                                         //Toast.makeText(MainActivity.this, "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
 

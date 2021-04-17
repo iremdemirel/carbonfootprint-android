@@ -28,8 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bil496.forFirebase.Blog;
 import com.example.bil496.forFirebase.BlogText;
 import com.example.bil496.forFirebase.Users;
-import com.example.bil496.foundations.WebScrapingGreenPeace;
-import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
 import com.example.bil496.ui.map.MapsFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -193,6 +191,12 @@ public class MainActivity extends AppCompatActivity {
                     users.setBio("");
 
                     ref.setValue(users);
+
+                    reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("score").setValue(0f);
+                    String emailpart = user.getEmail().substring(0, user.getEmail().indexOf("@"));
+                    reference.child("lookupTable").child(emailpart).child("id").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    reference.child("lookupTable").child(emailpart).child("mail").setValue(user.getEmail());
+
                 }
 
                 if ((dataSnapshot.child("carbon").exists())) {
@@ -370,7 +374,9 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (key != null) {
-                                    if ((dataSnapshot.hasChild(key))) {
+                                    if (currentUserID.equalsIgnoreCase(key)) {
+                                        //Toast.makeText(MainActivity.this, "Kendi hesabınız", Toast.LENGTH_SHORT).show();
+                                    } else if ((dataSnapshot.hasChild(key))) {
 
                                         //Toast.makeText(MainActivity.this, "Arkadaş kayıtlı", Toast.LENGTH_SHORT).show();
 
