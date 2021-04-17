@@ -72,12 +72,15 @@ public class HomeFragment extends Fragment {
 
 
     private FirebaseRecyclerOptions<Users> posts;
+    private FirebaseRecyclerOptions<Users> boardPosts;
     private FirebaseRecyclerAdapter<Users, FriendViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Users, BoardViewHolder> boardAdapter;
     private RecyclerView recyclerView;
 
     private String currentUserID;
     private AlertDialog friendPopup;
     private AlertDialog searchPopup;
+    private Button boardButton;
     private View myRoot;
     Context cont;
 
@@ -95,7 +98,14 @@ public class HomeFragment extends Fragment {
 
         reference = FirebaseDatabase.getInstance().getReference();
         currentUserID = FirebaseAuth.getInstance().getUid();
-        searchUserButton = (Button) root.findViewById(R.id.searchUserButton);
+        boardButton = (Button) root.findViewById(R.id.toAddBoardButton);
+        boardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBoardPopup(view);
+            }
+        });
+        /*searchUserButton = (Button) root.findViewById(R.id.searchUserButton);
         searchUserButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -125,7 +135,6 @@ public class HomeFragment extends Fragment {
                         for(Holder holder : scores){
                             sb.append(holder.name + "\t" + holder.value + "\n");
                         }
-                        System.out.println("sb içi: " + sb.toString());
                         AlertDialog.Builder builder = new AlertDialog.Builder(cont);
                         builder.setCancelable(true);
                         builder.setTitle("Lider Tablosu");
@@ -139,6 +148,7 @@ public class HomeFragment extends Fragment {
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
                             }
                         });
                         builder.show();
@@ -151,7 +161,7 @@ public class HomeFragment extends Fragment {
                 });
 
             }
-        });
+        });*/
 
         recyclerView = (RecyclerView) root.findViewById(R.id.friendrecyclerView);
         recycleMap = (Button) root.findViewById(R.id.RecycleMapButton);
@@ -276,6 +286,65 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
+    public void addBoardPopup(final View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = (View) inflater.inflate(R.layout.board_dialog_layout, null);
+
+        builder.setView(dialogView);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        RecyclerView rv = (RecyclerView) dialogView.findViewById(R.id.dialogRecycler);
+        rv.hasFixedSize();
+        rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+
+        boardPosts = new FirebaseRecyclerOptions.Builder<Users>().setQuery(reference.child("Users").orderByChild("carbon/total"), Users.class).build();
+        boardAdapter = new FirebaseRecyclerAdapter<Users, com.example.bil496.ui.home.BoardViewHolder>(boardPosts) {
+            @NonNull
+            @Override
+            public com.example.bil496.ui.home.BoardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.board_view_layout, parent, false);
+                return new com.example.bil496.ui.home.BoardViewHolder(view);
+
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull com.example.bil496.ui.home.BoardViewHolder holder, final int position, @NonNull final Users model) {
+                if(model != null){
+                    if(model.getCarbon() != null){
+                        holder.name.setText(model.getName() + "\t" + model.getCarbon().get("total") + "");
+                    }
+                    else{
+                        holder.name.setText(model.getName() + "\t0.0");
+                    }
+
+
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+                    });
+                }
+
+            }
+        };
+
+        boardAdapter.startListening();
+        rv.setAdapter(boardAdapter);
+
+        searchPopup = builder.create();
+
+        searchPopup.show();
+
+    }
+
+
     //add friend dialog
     public void addFriendPopup(final View view) {
 
@@ -377,25 +446,6 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

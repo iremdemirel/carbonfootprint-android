@@ -1,14 +1,33 @@
 package com.example.bil496.forFirebase;
 
+import java.util.HashMap;
+
 public class Users {
     private String name;
     private String email;
     private String photoURL;
     private String bio;
-    //private int score;
+    private HashMap<String, Float> carbon;
     //private ArrayList<Blog> blog;
 
+
+    public Users(String name, String email, String photoURL, String bio, HashMap<String, Float> carbon) {
+        this.name = name;
+        this.email = email;
+        this.photoURL = photoURL;
+        this.bio = bio;
+        this.carbon = carbon;
+    }
+
     public Users() {
+    }
+
+    public HashMap<String, Float> getCarbon() {
+        return carbon;
+    }
+
+    public void setCarbon(HashMap<String, Float> carbon) {
+        this.carbon = carbon;
     }
 
     public Users(String name, String email, String photoURL) {
@@ -26,14 +45,6 @@ public class Users {
         this.bio = bio;
     }
 
-
-    /*public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }*/
 
     public String getPhotoURL() {
         return photoURL;
