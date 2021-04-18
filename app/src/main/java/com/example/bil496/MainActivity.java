@@ -28,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bil496.forFirebase.Blog;
 import com.example.bil496.forFirebase.BlogText;
 import com.example.bil496.forFirebase.Users;
+import com.example.bil496.foundations.WebScrapingGreenPeace;
+import com.example.bil496.foundations.WebScrapingTema;
 import com.example.bil496.ui.dashboard.NewsFragment;
 import com.example.bil496.ui.home.HomeFragment;
 import com.example.bil496.ui.map.MapsFragment;
