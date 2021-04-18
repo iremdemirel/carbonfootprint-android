@@ -14,13 +14,13 @@
     <fragment
         android:id="@+id/carboncalculation"
         android:name="com.example.bil496.ui.carboncalculation.CarbonCalculation"
-        android:label="Carbon Footprint Calculation"
+        android:label="Karbon Ayakizi"
         tools:layout="@layout/fragment_carbon_calculation" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.bil496.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="Keşfet"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/navigation_foundations"
         android:name="com.example.bil496.ui.foundations.FoundationFragment"
-        android:label="Foundations"
+        android:label="Vakıflar"
         tools:layout="@layout/fragment_foundation" />
 <!--
     <fragment
